@@ -23,7 +23,7 @@ The instance was set up with `gpuctl prepare gb10-hackathon -m Qwen/Qwen2.5-0.5B
 - **[Current status](docs/status.md) — start here for active session context**
 - [README](README.md) — hackathon context, our angle, hardware specs
 - [Brainstorm](docs/reference/brainstorm.md) — capabilities, ideas, open questions
-- [Setup guide](docs/setup.md) — install, configure, and start everything
+- [Setup guide](docs/setup.md) — install, configure, and start everything (**keep this current**: any new install step, config file, API key, or env var needed to run the stack must be documented here)
 - [Design](docs/design/index.md) — HLD, components, demo flow
   - [Energy proxy](docs/design/energy-proxy.md)
   - [Carbon router](docs/design/carbon-router.md)

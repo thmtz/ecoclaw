@@ -17,12 +17,12 @@ PROXY_PORT = 8001
 app = FastAPI(title="EcoClaw Energy Proxy")
 
 
-def _format_receipt(energy_mj: float, tokens: int) -> str:
-    tok_per_j = (tokens / (energy_mj / 1000)) if energy_mj > 0 else 0
+def _format_receipt(delta_mj: float, tokens: int) -> str:
+    tok_per_j = (tokens / (delta_mj / 1000)) if delta_mj > 0 else 0
     s = st.get()
     return (
         f"\n\n─────────────────────────────\n"
-        f"⚡ Energy: {energy_mj:.0f} mJ · {energy_mj/3600:.4f} mWh · {tok_per_j:.0f} tok/J\n"
+        f"⚡ Energy: {delta_mj:.0f} mJ · {delta_mj/3600:.4f} mWh · {tok_per_j:.0f} tok/J\n"
         f"🌱 Grid: {s.carbon_gco2:.0f} gCO₂/kWh · {s.mode} · {s.model_short}\n"
         f"─────────────────────────────"
     )

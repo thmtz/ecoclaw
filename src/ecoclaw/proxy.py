@@ -57,9 +57,9 @@ def _fmt_energy(mj: float) -> str:
 def _fmt_power(mj: float) -> str:
     mwh = mj / 3600
     if mwh >= 1000:
-        return f"{mwh/1000:.4f} Wh"
+        return f"{mwh/1000:.2f} Wh"
     elif mwh >= 0.01:
-        return f"{mwh:.4f} mWh"
+        return f"{mwh:.2f} mWh"
     else:
         return f"{mwh*1000:.2f} µWh"
 

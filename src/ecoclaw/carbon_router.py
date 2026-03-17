@@ -115,12 +115,50 @@ def select_model(carbon: float, config: dict, current_model: str) -> tuple[str, 
     return None, None
 
 
-def _notify_openclaw(message: str, token: str = "439368c7ef3a54d50317db8d985c5b2829ab2e494ec24e26"):
+def _apply_freq_cap(min_mhz: int = 300, max_mhz: int = 1000):
+    """Cap GPU SM frequency for green mode."""
+    try:
+        result = subprocess.run(
+            ["sudo", "nvidia-smi", "-lgc", f"{min_mhz},{max_mhz}"],
+            capture_output=True, text=True
+        )
+        log.info("Freq cap applied (%d-%d MHz): %s", min_mhz, max_mhz, result.stdout.strip())
+    except Exception as e:
+        log.warning("Freq cap failed: %s", e)
+
+
+def _reset_freq_cap():
+    """Remove GPU frequency cap for performance mode."""
+    try:
+        result = subprocess.run(
+            ["sudo", "nvidia-smi", "-rgc"],
+            capture_output=True, text=True
+        )
+        log.info("Freq cap reset: %s", result.stdout.strip())
+    except Exception as e:
+        log.warning("Freq cap reset failed: %s", e)
+
+
+def _notify_openclaw(message: str, token: str | None = None):
     """Push a message into the active OpenClaw WebChat session via chat.inject.
 
     Uses sync websocket-client (not async websockets) since this runs in a
     daemon thread where creating a new event loop is fragile.
+    Token is read from OPENCLAW_TOKEN env var or ~/.openclaw/openclaw.json.
     """
+    if token is None:
+        token = os.environ.get("OPENCLAW_TOKEN", "")
+    if not token:
+        # Try to read from OpenClaw config
+        oc_config = Path.home() / ".openclaw" / "openclaw.json"
+        if oc_config.exists():
+            try:
+                token = json.loads(oc_config.read_text()).get("gateway", {}).get("auth", {}).get("token", "")
+            except Exception:
+                pass
+    if not token:
+        log.warning("No OpenClaw token — skipping chat.inject notification")
+        return
     try:
         from websocket import create_connection
 

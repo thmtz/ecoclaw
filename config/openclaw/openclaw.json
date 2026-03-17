@@ -38,7 +38,7 @@
     "mode": "local",
     "auth": {
       "mode": "token",
-      "token": "439368c7ef3a54d50317db8d985c5b2829ab2e494ec24e26"
+      "token": "YOUR_TOKEN_HERE"
     },
     "http": {
       "endpoints": {

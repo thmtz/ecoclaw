@@ -100,7 +100,7 @@ pip install fastapi uvicorn httpx pyyaml pynvml websocket-client
 
 # Set Electricity Maps API key
 mkdir -p ~/.config/electricity_maps
-echo "UpuAetadx7a7TBYyMByj" > ~/.config/electricity_maps/api_key
+echo "YOUR_API_KEY" > ~/.config/electricity_maps/api_key  # Get free key at https://api-portal.electricitymaps.com/
 
 # Run (starts proxy on :8001 + carbon router thread)
 cd ~/dev/hackathon

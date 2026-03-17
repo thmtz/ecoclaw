@@ -137,5 +137,5 @@ gpuctl exec gb10-hackathon "curl -s http://localhost:8001/v1/chat/completions -H
 | Super 120B model | `nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4` |
 | Carbon threshold | 300 gCO₂/kWh |
 | Mock carbon file | `~/.ecoclaw/mock_carbon` |
-| OpenClaw auth token | `439368c7ef3a54d50317db8d985c5b2829ab2e494ec24e26` |
+| OpenClaw auth token | Auto-generated on first start, see `~/.openclaw/openclaw.json` |
 | WebChat URL | `http://localhost:18789` (via SSH tunnel) |

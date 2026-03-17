@@ -39,15 +39,21 @@ async def proxy(request: Request, path: str):
     # Non-chat endpoints: pass through unchanged
     is_chat = path in ("v1/chat/completions", "v1/completions")
     if not is_chat:
-        async with httpx.AsyncClient(timeout=120) as client:
-            r = await client.request(
-                method=request.method,
-                url=url,
-                headers={k: v for k, v in request.headers.items() if k.lower() != "host"},
-                content=body,
+        try:
+            async with httpx.AsyncClient(timeout=120) as client:
+                r = await client.request(
+                    method=request.method,
+                    url=url,
+                    headers={k: v for k, v in request.headers.items() if k.lower() != "host"},
+                    content=body,
+                )
+            return Response(content=r.content, status_code=r.status_code,
+                            media_type=r.headers.get("content-type"))
+        except httpx.ConnectError:
+            return Response(
+                content=json.dumps({"error": {"message": "vLLM backend unavailable", "type": "proxy_error"}}),
+                status_code=502, media_type="application/json",
             )
-        return Response(content=r.content, status_code=r.status_code,
-                        media_type=r.headers.get("content-type"))
 
     # Parse request to check streaming
     try:

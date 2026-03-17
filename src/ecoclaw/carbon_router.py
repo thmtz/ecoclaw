@@ -28,20 +28,23 @@ DEFAULT_CONFIG = {
 
 MODELS = {
     "nano": {
-        "id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-NVFP4",
+        "id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8",
         "short": "Nemotron Nano 30B",
         "gpu_mem_util": 0.9,
         "max_model_len": 32768,
+        "reasoning_parser": "nano_v3",
+        "env": "VLLM_USE_FLASHINFER_MOE_FP8=1",
     },
     "super": {
         "id": "nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4",
         "short": "Nemotron Super 120B",
-        "gpu_mem_util": 0.5,
+        "gpu_mem_util": 0.75,
         "max_model_len": 4096,
+        "reasoning_parser": "super_v3",
+        "env": "VLLM_USE_FLASHINFER_MOE_FP4=0 VLLM_NVFP4_GEMM_BACKEND=marlin",
     },
 }
 
-VLLM_ENV = "VLLM_USE_FLASHINFER_MOE_FP4=0 VLLM_NVFP4_GEMM_BACKEND=marlin"
 VLLM_SCREEN = "vllm"
 
 
@@ -118,10 +121,10 @@ def switch_model(model_key: str, label: str):
     # Start new vLLM
     cmd = (
         f"source ~/.profile && ml && "
-        f"{VLLM_ENV} "
+        f"{model['env']} "
         f"vllm serve {model['id']} "
         f"--trust-remote-code "
-        f"--reasoning-parser nano_v3 "
+        f"--reasoning-parser {model['reasoning_parser']} "
         f"--max-model-len {model['max_model_len']} "
         f"--gpu-memory-utilization {model['gpu_mem_util']} "
         f"2>&1 | tee /tmp/vllm-{model_key}.log"

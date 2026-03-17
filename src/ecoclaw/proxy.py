@@ -51,6 +51,11 @@ async def proxy(request: Request, path: str):
         req_json = json.loads(body)
     except Exception:
         req_json = {}
+
+    # Rewrite model ID to match currently-loaded model (handles carbon router switches)
+    req_json["model"] = st.get().model
+    body = json.dumps(req_json).encode()
+
     streaming = req_json.get("stream", False)
 
     if streaming:

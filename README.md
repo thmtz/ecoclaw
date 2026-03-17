@@ -2,22 +2,21 @@
 
 Every time you ask an AI a question, it burns energy. EcoClaw tells you exactly how much.
 
-It's a chat assistant running on an NVIDIA GB10 that measures the actual joules consumed by each response using hardware counters, calculates the CO₂ footprint from live grid data, and prints a receipt at the bottom of every answer. When the grid gets dirty, it throttles the GPU to save energy. When the grid is clean, it runs at full speed.
+It runs on an NVIDIA GB10 and measures the actual joules consumed by each response using GPU hardware counters. It calculates the CO₂ footprint using live grid data from the Electricity Maps API and prints a receipt at the bottom of every answer. A background carbon router watches grid conditions and throttles the GPU when the grid is dirty, restoring full speed when it cleans up.
 
 Built at GTC 2026 "Hack for Impact" (Eco Impact track).
 
 ## What you see
 
-Every response ends with a receipt like this:
-
 ```
 ─────────────────────────────
 ⚡ Energy: 1.42 J · 0.39 mWh · 18.4 tok/J
 🌱 Grid: 180 gCO₂/kWh · 0.07 mgCO₂ this response · green mode · Nemotron Nano
+📊 Session: 8.31 J total · 5 requests
 ─────────────────────────────
 ```
 
-The energy number comes from NVML hardware counters on the GPU (not an estimate). The CO₂ number comes from the Electricity Maps API, which reports the real-time carbon intensity of the California power grid.
+The energy number comes from NVML hardware counters on the GPU, not an estimate. The CO₂ number combines measured energy with the real-time carbon intensity of the California power grid (US-CAL-CISO zone). The session line tracks cumulative energy across the conversation.
 
 ## Architecture
 
@@ -34,24 +33,21 @@ Energy Proxy ◄── NVML (per-request energy measurement)
 vLLM (local inference)
  │
  ▼
-GB10 GPU (Nemotron Nano 30B)
+GB10 GPU ◄── nvidia-smi freq cap (carbon router)
 
 Carbon Router ◄── Electricity Maps API (live grid carbon intensity)
- └──► adjusts GPU frequency when carbon thresholds are crossed
+ └──► caps GPU clock frequency when carbon is high, uncaps when it drops
 ```
 
-The energy proxy sits between [OpenClaw](https://github.com/openclaw/openclaw) and vLLM. It snapshots the GPU energy counter before and after each request, computes the delta, and injects the receipt into the response stream before OpenClaw ever sees it. OpenClaw itself is unmodified; we only provide config files (`config/openclaw/`).
+The energy proxy sits between [OpenClaw](https://github.com/openclaw/openclaw) and vLLM. It snapshots the GPU energy counter before and after each request, computes the delta, and injects the receipt into the response stream. OpenClaw is unmodified; we only provide config files (`config/openclaw/`).
 
-The carbon router polls the Electricity Maps API every 10 minutes. When grid carbon crosses a threshold (default 300 gCO₂/kWh), it caps the GPU clock frequency to reduce energy use. When the grid cleans up, it removes the cap.
+The carbon router polls grid carbon intensity every 10 minutes. When carbon crosses 300 gCO₂/kWh, it caps GPU clock frequency to 300-1000 MHz via `nvidia-smi -lgc`. When the grid cleans up, it runs `nvidia-smi -rgc` to restore full speed. A 20 gCO₂/kWh hysteresis band prevents flapping. State changes push a notification into the active WebChat session via OpenClaw's `chat.inject` API.
 
-## Models
+## Model
 
-| Model | Active params | Quantization | Role |
-|-|-|-|-|
-| Nemotron Nano 30B-A3B | 3B | FP8 (native Blackwell) | Primary model, always loaded |
-| Nemotron Super 120B-A12B | 12B | NVFP4 + MARLIN | Alternative for dual-model setups |
+We run Nemotron Nano 30B-A3B (FP8, 3B active params) on the GB10. It's a MoE hybrid Mamba-Transformer from NVIDIA that hits ~72 tok/s with native Blackwell FP8 kernels.
 
-Both are MoE hybrid Mamba-Transformer architectures from NVIDIA. The Nano runs at ~72 tok/s on GB10; the Super runs at ~15-17 tok/s but produces higher quality output.
+Carbon response works by adjusting GPU clock frequency rather than switching models. This gives instant transitions with no downtime, and keeps the system simple (one model loaded, one vLLM process).
 
 ## Running it
 
@@ -72,15 +68,15 @@ PYTHONPATH=src python -m ecoclaw.main
 open http://localhost:18789
 ```
 
-Optional: get a free Electricity Maps API key at https://api-portal.electricitymaps.com/ and put it in `~/.config/electricity_maps/api_key`. Without it, the carbon router uses a fallback value.
+Get a free Electricity Maps API key at https://api-portal.electricitymaps.com/ and put it in `~/.config/electricity_maps/api_key`. Without one, the carbon router falls back to a default value.
 
-Full setup instructions: [docs/setup.md](docs/setup.md)
+Full setup: [docs/setup.md](docs/setup.md)
 
-## How it works, in detail
+## More detail
 
 - [Design overview](docs/design/index.md)
-- [Energy proxy](docs/design/energy-proxy.md) (NVML measurement + receipt injection)
-- [Carbon router](docs/design/carbon-router.md) (threshold logic, model switching)
+- [Energy proxy](docs/design/energy-proxy.md) (NVML measurement, receipt injection)
+- [Carbon router](docs/design/carbon-router.md) (threshold logic, freq cap)
 - [OpenClaw integration](docs/design/openclaw.md) (provider config, workspace files)
 
 ## Team

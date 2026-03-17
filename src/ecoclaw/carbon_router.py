@@ -206,13 +206,15 @@ def apply_carbon_action(model_key: str, label: str):
     if model_key == "nano":
         # Dirty grid: cap frequency to reduce energy
         _apply_freq_cap(300, 1000)
+        gpu_status = "throttled @ 1000 MHz"
     else:
         # Clean grid: restore full frequency
         _reset_freq_cap()
+        gpu_status = "full speed @ 2398 MHz"
 
     st.update(
         model=model["id"],
-        model_short=model["short"],
+        model_short=f"{model['short']} · {gpu_status}",
         mode=label,
     )
     log.info("Carbon action complete: %s", model["short"])

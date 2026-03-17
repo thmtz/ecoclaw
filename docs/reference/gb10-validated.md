@@ -188,6 +188,22 @@ We can *measure* power but cannot *cap* it. The only way to control power consum
 | hwmon3-6 | mlx5 | ConnectX-7 NIC (4 instances) |
 | hwmon7 | mt7925_phy0 | WiFi radio |
 
+## CUDA capability and PyTorch compatibility
+
+GB10 is CUDA compute capability **sm_121**. PyTorch 2.10+cu130 (what's installed) caps at **sm_120**. This causes critical failures with certain quantization kernels:
+
+- CUTLASS TMA WS grouped GEMM (used by NVFP4 MoE models) fails to initialize on sm_121:
+  ```
+  Failed to initialize cutlass TMA WS grouped gemm. Error: Error Internal
+  ```
+- The FlashInfer autotuner skips failing tactics but remaining tactics produce **NaN logits**
+- Result: model generates tokens (completion_tokens > 0) but all decode to empty string `""`
+- Confirmed by `ValueError: Out of range float values are not JSON compliant: nan` when requesting logprobs
+- Affects BOTH normal mode and `--enforce-eager` — this is a kernel issue, not a graph capture issue
+- PyTorch prints on startup: `Maximum cuda capability supported by this version of PyTorch is (12.0)`
+
+**Practical impact:** NVFP4 quantized MoE models (Nemotron-3-Nano/Super NVFP4) do not work on this device with PyTorch 2.10+cu130. FP8 and BF16 quantized variants are being tested as alternatives — they use different kernels that may not hit this limitation.
+
 ## What's NOT available
 
 - **tegrastats** — not found on this device despite ChatGPT's claims. Not in PATH, not in /usr/bin.

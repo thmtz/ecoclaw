@@ -38,12 +38,17 @@ Startup takes 3-5+ minutes for large models due to:
 
 **Warning:** "Capturing CUDA graphs (decode, FULL)" is the slow phase. Each step takes progressively longer as batch sizes grow. 35 steps, up to ~130s per step at the large end. Total first-run startup for Nano 30B: ~30-45 min. Subsequent runs: significantly faster (graphs are cached).
 
-**`--enforce-eager` — DO NOT USE with NVFP4 MoE models (validated broken):**
-Tested on GB10 with Nemotron-3 Nano NVFP4. Startup is fast (~2.5 min, skips torch.compile and CUDA graph capture). But inference produces empty responses — tokens are "generated" (usage counts increment) but `content` is always empty. Root cause: FlashInfer CUTLASS autotuner cannot initialize valid MoE GEMM tactics without torch.compile graphs. Error in logs:
-```
-Skipping tactic ... due to failure: Failed to initialize cutlass TMA WS grouped gemm
-```
-Do not use `--enforce-eager` with these models. The full CUDA graph startup (~30-45 min first run) is required for correct output.
+**`--enforce-eager` — DO NOT USE with NVFP4 MoE models:**
+Disables BOTH torch.inductor AND CUDA graphs (`-cc.mode=NONE -cc.cudagraph_mode=NONE`). Tested on GB10 with Nemotron-3 Nano NVFP4:
+- Startup fast (~2.5 min) but inference returns empty responses (tokens counted, content blank)
+- Root cause: NVFP4 MoE CUTLASS kernels are not CUDA-graph-safe (vllm issue #35566); disabling graphs causes silent failures
+- Performance: ~8x throughput regression on Blackwell hardware (140 → 17 tok/s) even when it works
+
+**Surgical alternatives (finer-grained control):**
+- `-cc.mode=0` — disables torch.inductor JIT only; CUDA graphs still captured. Faster startup, no throughput loss.
+- `-cc.cudagraph_mode=NONE` — disables CUDA graphs only; torch.inductor still compiles.
+
+**Bottom line:** The full CUDA graph startup (~30-45 min first run, faster after cache) is required for correct NVFP4 MoE inference. The cache persists at `~/.cache/vllm/torch_compile_cache/` — subsequent startups are significantly faster.
 
 ## Nemotron models — required flags
 

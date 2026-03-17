@@ -22,6 +22,7 @@ The instance was set up with `gpuctl prepare gb10-hackathon -m Qwen/Qwen2.5-0.5B
 
 - [README](README.md) — hackathon context, our angle, hardware specs
 - [Brainstorm](docs/brainstorm.md) — capabilities, ideas, open questions
+- [Design](docs/design.md) — HLD, components, demo flow
 
 ### Reference docs (validated findings, not design)
 
@@ -29,3 +30,5 @@ The instance was set up with `gpuctl prepare gb10-hackathon -m Qwen/Qwen2.5-0.5B
 - [GB10 setup & environment](docs/reference/gb10-setup.md) — connection details, installed software, gotchas
 - [Electricity Maps API](docs/reference/electricity-maps.md) — carbon intensity API, endpoints, mock fallback
 - [vLLM](docs/reference/vllm.md) — serving models, startup time, memory, gotchas
+- [OpenClaw](docs/reference/openclaw.md) — integration guide, footer injection, vLLM provider config
+- [DGX Spark Playbooks](docs/reference/dgx-spark-playbooks.md) — NVIDIA official playbooks for vLLM, Nemotron, NemoClaw, NVFP4 on GB10

@@ -12,8 +12,8 @@ STATE_FILE = Path.home() / ".ecoclaw" / "state.json"
 class EcoClawState:
     carbon_gco2: float = 250.0
     mode: str = "balanced"
-    model: str = "nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4"
-    model_short: str = "Nemotron Super 120B"
+    model: str = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8"
+    model_short: str = "Nemotron Nano 30B"
     updated_at: str = ""
 
     def __post_init__(self):

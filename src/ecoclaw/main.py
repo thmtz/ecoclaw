@@ -20,7 +20,7 @@ def main():
     # Start carbon router in background thread
     router_thread = threading.Thread(
         target=carbon_router.run,
-        kwargs={"initial_model_key": "super"},
+        kwargs={"initial_model_key": "nano"},
         daemon=True,
         name="carbon-router",
     )

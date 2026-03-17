@@ -29,15 +29,32 @@ Both are cached at `~/.cache/huggingface/hub/`.
 
 ## 2. vLLM
 
-**Nano (FP8 — default model):**
+**Nano (FP8 — default/green-mode model, validated):**
 ```bash
-# TBD — vllm-expert to fill in final validated command
+screen -dmS vllm bash -lc 'source ~/.profile && ml && \
+  VLLM_USE_FLASHINFER_MOE_FP8=1 \
+  vllm serve nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8 \
+    --trust-remote-code \
+    --max-model-len 32768 \
+    --reasoning-parser nano_v3 \
+    --reasoning-parser-plugin ~/.cache/huggingface/hub/models--nvidia--NVIDIA-Nemotron-3-Nano-30B-A3B-NVFP4/snapshots/ce1b118ae66ec705d02c241525192832eb045fd3/nano_v3_reasoning_parser.py \
+  2>&1 | tee /tmp/vllm-nano.log'
 ```
 
-**Super 120B (NVFP4+MARLIN — high-performance mode):**
+**Super 120B (NVFP4+MARLIN — performance-mode model, TBD):**
 ```bash
-# TBD — vllm-expert to fill in final validated command
+# Final config pending Super 120B validation — see docs/reference/vllm.md
+screen -dmS vllm bash -lc 'source ~/.profile && ml && \
+  VLLM_USE_FLASHINFER_MOE_FP4=0 VLLM_NVFP4_GEMM_BACKEND=marlin \
+  vllm serve nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4 \
+    --trust-remote-code \
+    --max-model-len 4096 \
+    --gpu-memory-utilization 0.6 \
+    --reasoning-parser nano_v3 \
+  2>&1 | tee /tmp/vllm-super.log'
 ```
+
+Note: carbon router handles model switching automatically. Manually start whichever model you want initially; the router will switch as needed after the first poll interval.
 
 See `docs/reference/vllm.md` for full flag reference and troubleshooting.
 
@@ -68,25 +85,29 @@ screen -dmS proxy bash -lc 'source ~/.profile && ml && cd ~/git/hackathon/src &&
 
 ## 4. OpenClaw
 
-**Install (one-time):**
+**Install (one-time, validated):**
 ```bash
-# TBD — openclaw-expert to fill in after GB10 validation
-# Requires Node.js ≥22 and pnpm
+# Node.js v22.22.1 and pnpm 10.32.1 already on GB10
+cd ~/git/openclaw && pnpm install
+pnpm ui:build   # required — without this, browser shows "Missing Control UI assets"
 ```
 
 **Configure:**
 ```bash
-cp ~/git/hackathon/config/openclaw.json ~/.openclaw/openclaw.json
 mkdir -p ~/.openclaw/workspace
+cp ~/git/hackathon/config/openclaw/openclaw.json ~/.openclaw/openclaw.json
 cp ~/git/hackathon/config/openclaw-workspace/AGENTS.md ~/.openclaw/workspace/
 cp ~/git/hackathon/config/openclaw-workspace/SOUL.md ~/.openclaw/workspace/
 ```
 
-**Start gateway:**
+**Start gateway (validated):**
 ```bash
-# TBD — openclaw-expert to fill in validated start command
-# Gateway runs on :18789, WebChat accessible at http://10.1.96.152:18789
+screen -dmS openclaw bash -lc 'cd ~/git/openclaw && VLLM_API_KEY=none npx openclaw gateway --port 18789 --verbose 2>&1 | tee /tmp/openclaw.log'
 ```
+
+WebChat accessible at `http://10.1.96.152:18789` from laptop on same network.
+
+**Important:** Do NOT run `openclaw onboard` — it's interactive and overwrites config.
 
 ---
 
@@ -95,14 +116,17 @@ cp ~/git/hackathon/config/openclaw-workspace/SOUL.md ~/.openclaw/workspace/
 Once everything is installed, start components in this order:
 
 ```bash
-# 1. Start vLLM (Nano by default)
-screen -dmS vllm bash -lc '...'   # TBD
+# 1. Start vLLM with Nano FP8
+screen -dmS vllm bash -lc 'source ~/.profile && ml && VLLM_USE_FLASHINFER_MOE_FP8=1 vllm serve nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8 --trust-remote-code --max-model-len 32768 --reasoning-parser nano_v3 --reasoning-parser-plugin ~/.cache/huggingface/hub/models--nvidia--NVIDIA-Nemotron-3-Nano-30B-A3B-NVFP4/snapshots/ce1b118ae66ec705d02c241525192832eb045fd3/nano_v3_reasoning_parser.py 2>&1 | tee /tmp/vllm-nano.log'
 
-# 2. Start EcoClaw proxy + carbon router
+# 2. Wait for vLLM to be ready (~2-5 min with warm cache)
+watch -n5 'curl -s http://localhost:8000/v1/models'
+
+# 3. Start EcoClaw proxy + carbon router
 screen -dmS proxy bash -lc 'source ~/.profile && ml && cd ~/git/hackathon/src && python -m ecoclaw.main 2>&1 | tee /tmp/proxy.log'
 
-# 3. Start OpenClaw gateway
-screen -dmS openclaw bash -lc '...'   # TBD
+# 4. Start OpenClaw gateway
+screen -dmS openclaw bash -lc 'cd ~/git/openclaw && VLLM_API_KEY=none npx openclaw gateway --port 18789 --verbose 2>&1 | tee /tmp/openclaw.log'
 
 # 4. Verify
 curl http://localhost:8000/v1/models   # vLLM

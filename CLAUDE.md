@@ -26,6 +26,7 @@ The instance was set up with `gpuctl prepare gb10-hackathon -m Qwen/Qwen2.5-0.5B
 - [Design](docs/design/index.md) — HLD, components, demo flow
   - [Energy proxy](docs/design/energy-proxy.md)
   - [Carbon router](docs/design/carbon-router.md)
+  - [OpenClaw integration](docs/design/openclaw.md)
 
 ### Reference docs (validated findings, not design)
 

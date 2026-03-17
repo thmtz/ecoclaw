@@ -118,6 +118,29 @@ curl http://localhost:8000/v1/chat/completions \
 
 Both Nemotron models require `--trust-remote-code` due to custom model code in the repo.
 
+## Nemotron-3-Nano-30B-A3B-FP8 — validated working
+
+FP8 model works natively on sm_121 without MARLIN. The FlashInfer CUTLASS FP8 MoE autotuner skips a few tactics (`GPU lacks shared memory resources`) but finds valid working ones — no NaN, correct output.
+
+**Launch command (validated):**
+```bash
+screen -dmS vllm bash -lc 'source ~/.profile && ml && \
+  VLLM_USE_FLASHINFER_MOE_FP8=1 \
+  vllm serve nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8 \
+    --trust-remote-code \
+    --max-model-len 32768 \
+    --reasoning-parser nano_v3 \
+    --reasoning-parser-plugin ~/.cache/huggingface/hub/models--nvidia--NVIDIA-Nemotron-3-Nano-30B-A3B-NVFP4/snapshots/ce1b118ae66ec705d02c241525192832eb045fd3/nano_v3_reasoning_parser.py \
+  2>&1 | tee /tmp/vllm-fp8.log'
+```
+
+**Model comparison (both validated working):**
+
+| Model | Backend | Memory | Notes |
+|-|-|-|-|
+| Nemotron-3-Nano NVFP4 | MARLIN (software fallback) | 110 GiB | Requires `VLLM_USE_FLASHINFER_MOE_FP4=0 VLLM_NVFP4_GEMM_BACKEND=marlin` |
+| Nemotron-3-Nano FP8 | FlashInfer CUTLASS (native) | 107 GiB | Works out of the box with `VLLM_USE_FLASHINFER_MOE_FP8=1`; FP8 = 2× larger weights than NVFP4 |
+
 ## Model memory usage (per-process, validated)
 
 `nvidia-smi --query-compute-apps=pid,process_name,used_gpu_memory --format=csv` reports actual allocation.
@@ -125,7 +148,8 @@ Both Nemotron models require `--trust-remote-code` due to custom model code in t
 | Model | Observed GPU memory |
 |-|-|
 | Qwen/Qwen2.5-0.5B-Instruct | ~110 GiB (preallocates ~90% of unified memory by default) |
-| Nemotron-3 Nano 30B NVFP4 | TBD |
+| Nemotron-3 Nano 30B NVFP4 (MARLIN) | ~110 GiB |
+| Nemotron-3 Nano 30B FP8 (native) | ~107 GiB |
 | Nemotron-3 Super 120B NVFP4 | TBD |
 
 **Note:** vLLM preallocates ~90% of available memory for KV cache by default. On GB10 with 119 GiB unified memory this is ~107 GiB regardless of model size. Use `--gpu-memory-utilization` to tune.

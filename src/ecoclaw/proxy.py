@@ -56,18 +56,22 @@ async def proxy(request: Request, path: str):
     req_json["model"] = st.get().model
     body = json.dumps(req_json).encode()
 
+    # Strip headers that must not be forwarded when body is modified
+    _STRIP = {"host", "content-length", "transfer-encoding"}
+    _fwd_headers = {k: v for k, v in request.headers.items() if k.lower() not in _STRIP}
+
     streaming = req_json.get("stream", False)
 
     if streaming:
         # Ask vLLM to include usage stats in the final streaming chunk
         req_json.setdefault("stream_options", {})["include_usage"] = True
         body = json.dumps(req_json).encode()
-        return await _stream_proxy(request, url, body)
+        return await _stream_proxy(request, url, body, _fwd_headers)
     else:
-        return await _nonstream_proxy(request, url, body)
+        return await _nonstream_proxy(request, url, body, _fwd_headers)
 
 
-async def _nonstream_proxy(request: Request, url: str, body: bytes) -> Response:
+async def _nonstream_proxy(request: Request, url: str, body: bytes, headers: dict) -> Response:
     energy = {}
     try:
         with measure() as energy:
@@ -75,7 +79,7 @@ async def _nonstream_proxy(request: Request, url: str, body: bytes) -> Response:
                 r = await client.request(
                     method=request.method,
                     url=url,
-                    headers={k: v for k, v in request.headers.items() if k.lower() != "host"},
+                    headers=headers,
                     content=body,
                 )
             resp = r.json()
@@ -102,7 +106,7 @@ async def _nonstream_proxy(request: Request, url: str, body: bytes) -> Response:
     )
 
 
-async def _stream_proxy(request: Request, url: str, body: bytes) -> StreamingResponse:
+async def _stream_proxy(request: Request, url: str, body: bytes, headers: dict) -> StreamingResponse:
     # Pre-flight check: fail fast if vLLM is unreachable
     try:
         async with httpx.AsyncClient(timeout=5) as probe:
@@ -122,7 +126,7 @@ async def _stream_proxy(request: Request, url: str, body: bytes) -> StreamingRes
             async with client.stream(
                 method=request.method,
                 url=url,
-                headers={k: v for k, v in request.headers.items() if k.lower() != "host"},
+                headers=headers,
                 content=body,
             ) as r:
                 async for line in r.aiter_lines():

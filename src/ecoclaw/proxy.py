@@ -22,7 +22,7 @@ PROXY_PORT = 8001
 MOCK_FILE = Path.home() / ".ecoclaw" / "mock_carbon"
 
 _last_receipt: dict[str, float] = {}
-RECEIPT_COOLDOWN = 60.0  # seconds — OpenClaw makes 2 calls per turn; 60s covers even slow responses
+RECEIPT_COOLDOWN = 15.0  # seconds — blocks OpenClaw's duplicate internal calls (~3-5s apart)
 
 # Cumulative session energy tracking
 _session_lock = threading.Lock()
@@ -280,7 +280,7 @@ async def _stream_proxy(request: Request, url: str, body: bytes, headers: dict) 
                         continue
 
                     if line == "data: [DONE]":
-                        if not receipt_injected and total_tokens >= 10:
+                        if not receipt_injected and total_tokens >= 1:
                             client_ip = request.client.host if request.client else "unknown"
                             now = _time.time()
                             should_inject = (now - _last_receipt.get(client_ip, 0)) >= RECEIPT_COOLDOWN

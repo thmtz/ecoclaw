@@ -2,3 +2,6 @@
 # Dolt database files (added by bd init)
 .dolt/
 *.db
+
+# Local secrets and overrides
+CLAUDE.local.md

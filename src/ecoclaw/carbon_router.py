@@ -212,12 +212,14 @@ def apply_carbon_action(model_key: str, label: str):
         _reset_freq_cap()
         gpu_status = "full speed @ 2398 MHz"
 
+    # Never change state.model — we're freq-capping, not switching models.
+    # The loaded model (Nano FP8) stays constant; only GPU clock and display change.
+    nano = MODELS["nano"]
     st.update(
-        model=model["id"],
-        model_short=f"{model['short']} · {gpu_status}",
+        model_short=f"{nano['short']} · {gpu_status}",
         mode=label,
     )
-    log.info("Carbon action complete: %s", model["short"])
+    log.info("Carbon action complete: %s", gpu_status)
 
 
 def _current_label(carbon: float, config: dict, model_key: str) -> str:

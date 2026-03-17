@@ -186,6 +186,16 @@ def _wait_for_vllm(timeout: int = 300, poll: int = 5):
     log.error("vLLM did not become ready within %ds", timeout)
 
 
+def _current_label(carbon: float, config: dict, model_key: str) -> str:
+    """Return the mode label for the current carbon level regardless of whether a switch is needed."""
+    for threshold in config["thresholds"]:
+        if "carbon_gt" in threshold and carbon > threshold["carbon_gt"]:
+            return threshold["label"]
+        if "carbon_lte" in threshold and carbon <= threshold["carbon_lte"]:
+            return threshold["label"]
+    return MODELS[model_key]["short"]
+
+
 def _demo_poll():
     """One-shot poll used by the /demo/poll endpoint."""
     global _current_model_key
@@ -197,6 +207,9 @@ def _demo_poll():
     if new_key and new_key != _current_model_key:
         switch_model(new_key, label)
         _current_model_key = new_key
+    else:
+        # No switch needed — still update mode label to reflect current carbon state
+        st.update(mode=_current_label(carbon, config, _current_model_key))
 
 
 def run(initial_model_key: str = "nano", poll_event: threading.Event | None = None):

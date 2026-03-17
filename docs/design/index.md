@@ -141,7 +141,28 @@ Package the EcoClaw Python service (proxy + carbon router) as a Docker container
 ## Open questions
 
 - **Energy proxy streaming**: Resolved — footer must be injected as an extra content delta chunk **before** `[DONE]`, not after. OpenClaw reconstructs its own SSE stream from internal agent events; it does not passthrough raw SSE. Post-`[DONE]` chunks are never seen. See [energy-proxy.md](energy-proxy.md).
-- **NVFP4 on GB10**: Resolved — MARLIN backend works. Final launch config (max-model-len, reasoning-parser flag) being finalized by vllm-expert. FP8 being evaluated as potential faster alternative.
-- **Model switching UX**: Resolved — carbon router sends a system message before triggering the vLLM restart: "Switching to Nemotron Nano — high carbon on grid. Back in ~2 min."
-- **Footer injection**: Resolved — proxy appends formatted footer directly to stream. AGENTS.md as belt-and-suspenders fallback. No plugin needed.
+- **NVFP4 on GB10**: Resolved — MARLIN backend works. Nano uses FP8 (native sm_121, no workaround). Super uses NVFP4+MARLIN as fallback.
+- **Model switching UX**: Resolved — carbon router sends a chat.inject notification before triggering the vLLM restart: "Switching to Nemotron Nano — high carbon on grid. Back in ~2 min."
+- **Footer injection**: Resolved — proxy appends formatted footer directly to stream. No plugin needed.
 - **GPU clock capping**: Cut from MVP. Carbon router uses model selection only. Clock cap is a stretch goal.
+
+---
+
+## Implemented additions beyond original design
+
+Features added during implementation that were not in the original design:
+
+**Proxy field stripping**
+OpenClaw sends OpenAI API fields that vLLM does not support (`store`, `tools`, `tool_choice`, `metadata`, `reasoning_effort`). The proxy strips these before forwarding, preventing 400 errors. Also strips the `content-length` header when the request body is modified.
+
+**Proxy max_completion_tokens clamping**
+OpenClaw may send `max_completion_tokens` values larger than vLLM's `--max-model-len`. The proxy clamps this to 2048 to prevent 400 errors.
+
+**Demo control endpoints**
+`POST /demo/carbon/{value}` writes a mock carbon value to `~/.ecoclaw/mock_carbon`, overriding the live Electricity Maps API. `POST /demo/poll` triggers an immediate carbon router poll (bypasses the 10-minute interval). Used for video recording — lets us trigger the model-switch moment on demand without waiting for a real grid event or editing config.
+
+**Chat.inject notification**
+Before triggering a vLLM restart for a model switch, the carbon router calls the OpenClaw `chat.inject` API to insert a visible notification into the active WebChat session: "Switching to Nemotron Nano — grid carbon is X gCO₂/kWh (high). Back in ~2 min."
+
+**Mock carbon file**
+`~/.ecoclaw/mock_carbon` — if this file exists and contains a number, the carbon router uses it instead of calling Electricity Maps. Written by `POST /demo/carbon/{value}`, cleared manually. Lets you simulate any grid state without touching config or code.

@@ -20,4 +20,7 @@ The instance was set up with `gpuctl prepare gb10-hackathon -m Qwen/Qwen2.5-0.5B
 
 ## Details
 
-- [GB10 setup & environment](docs/gb10-setup.md) — full install details, power telemetry, gotchas
+- [README](README.md) — hackathon context, our angle, hardware specs
+- [Brainstorm](docs/brainstorm.md) — capabilities, ideas, open questions
+- [GB10 validated hardware](docs/gb10-validated.md) — confirmed specs, NVML support matrix, what works/doesn't
+- [GB10 setup & environment](docs/gb10-setup.md) — connection details, installed software, gotchas

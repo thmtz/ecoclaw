@@ -8,15 +8,9 @@ Built at GTC 2026 "Hack for Impact" (Eco Impact track).
 
 ## What you see
 
-```
-─────────────────────────────
-⚡ Energy: 1.42 J · 0.39 mWh · 18.4 tok/J
-🌱 Grid: 180 gCO₂/kWh · 0.07 mgCO₂ this response · green mode · Nemotron Nano
-📊 Session: 8.31 J total · 5 requests
-─────────────────────────────
-```
+![Energy receipt in OpenClaw WebChat](docs/img/receipt-demo.png)
 
-The energy number comes from NVML hardware counters on the GPU, not an estimate. The CO₂ number combines measured energy with the real-time carbon intensity of the California power grid (US-CAL-CISO zone). The session line tracks cumulative energy across the conversation.
+Every response includes a receipt showing energy consumed (from NVML hardware counters, not an estimate), CO₂ footprint (from the real-time carbon intensity of the California power grid), current mode, and cumulative session totals.
 
 ## Architecture
 

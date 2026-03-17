@@ -67,10 +67,17 @@ def _fmt_power(mj: float) -> str:
 def _format_receipt(delta_mj: float, tokens: int) -> str:
     tok_per_j = (tokens / (delta_mj / 1000)) if delta_mj > 0 else 0
     s = st.get()
+    gco2 = s.carbon_gco2 * (delta_mj / 3_600_000)
+    if gco2 < 0.001:
+        co2_str = f"{gco2*1_000_000:.1f} µgCO₂"
+    elif gco2 < 1:
+        co2_str = f"{gco2*1000:.2f} mgCO₂"
+    else:
+        co2_str = f"{gco2:.3f} gCO₂"
     return (
         f"\n\n─────────────────────────────\n"
         f"⚡ Energy: {_fmt_energy(delta_mj)} · {_fmt_power(delta_mj)} · {tok_per_j:.1f} tok/J\n"
-        f"🌱 Grid: {s.carbon_gco2:.0f} gCO₂/kWh · {s.mode} · {s.model_short}\n"
+        f"🌱 Grid: {s.carbon_gco2:.0f} gCO₂/kWh · {co2_str} this response · {s.mode} · {s.model_short}\n"
         f"─────────────────────────────"
     )
 

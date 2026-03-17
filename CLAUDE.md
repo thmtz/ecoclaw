@@ -22,5 +22,10 @@ The instance was set up with `gpuctl prepare gb10-hackathon -m Qwen/Qwen2.5-0.5B
 
 - [README](README.md) — hackathon context, our angle, hardware specs
 - [Brainstorm](docs/brainstorm.md) — capabilities, ideas, open questions
-- [GB10 validated hardware](docs/gb10-validated.md) — confirmed specs, NVML support matrix, what works/doesn't
-- [GB10 setup & environment](docs/gb10-setup.md) — connection details, installed software, gotchas
+
+### Reference docs (validated findings, not design)
+
+- [GB10 validated hardware](docs/reference/gb10-validated.md) — confirmed specs, NVML support matrix, what works/doesn't
+- [GB10 setup & environment](docs/reference/gb10-setup.md) — connection details, installed software, gotchas
+- [Electricity Maps API](docs/reference/electricity-maps.md) — carbon intensity API, endpoints, mock fallback
+- [vLLM](docs/reference/vllm.md) — serving models, startup time, memory, gotchas

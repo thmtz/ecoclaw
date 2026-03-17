@@ -40,6 +40,6 @@ See [docs/gb10-setup.md](docs/gb10-setup.md) for full environment details.
 
 ## Key references
 
-- [GB10 setup & environment](docs/gb10-setup.md) — install details, power telemetry, gotchas
+- [GB10 setup & environment](docs/reference/gb10-setup.md) — install details, power telemetry, gotchas
 - [Research notes (ChatGPT)](docs/deep-research-report-chatgpt.md) — NVML support, OpenClaw, models, competitive landscape
 - [Architecture plan](docs/Hackathon%20AI%20Energy%20Optimization%20Plan.md) — detailed design doc

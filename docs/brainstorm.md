@@ -3,7 +3,7 @@
 ## What we have
 
 - **GB10 (HP ZGX Nano)** — 128GB unified LPDDR5X (119Gi usable), 48 SM Blackwell GPU (6144 CUDA cores), 140W TDP, 3.6TB NVMe
-- **NVML power telemetry** — `power.draw` and `totalEnergyConsumption` (cumulative mJ counter) confirmed working. Memory reporting broken (unified mem). Power cap not exposed. No tegrastats. See [validated hardware report](gb10-validated.md).
+- **NVML power telemetry** — `power.draw` and `totalEnergyConsumption` (cumulative mJ counter) confirmed working. Memory reporting broken (unified mem). Power cap not exposed. No tegrastats. See [validated hardware report](reference/gb10-validated.md).
 - **vLLM 0.17.1** serving on `:8000`, PyTorch 2.10, CUDA 13.0
 - **OpenClaw 2026.3.14** cloned at `~/git/openclaw` — personal AI assistant gateway with native vLLM provider, skill/plugin system, WebChat UI. See [vLLM provider docs](https://docs.openclaw.ai/providers/vllm).
 - **NemoClaw** (NVIDIA) — enterprise security/privacy layer on top of OpenClaw, routes inference through local NVIDIA hardware. Announced at GTC 2026. [GitHub](https://github.com/NVIDIA/NemoClaw).
@@ -60,7 +60,10 @@ Create an OpenClaw skill that the agent can invoke to report its own energy cons
 
 **Why it works:** Targets the "Best Use of OpenClaw" bonus prize directly. Natural integration point via skill system.
 
-### 8. Carbon-intensity-aware inference envelope
+### 8. Quantization as an energy dimension
+Model quantization (FP16 → FP8 → NVFP4 → INT4) is another knob that trades quality for efficiency. We could profile the same model at different quantization levels and show energy:performance tradeoffs. Combined with model size and clock frequency, this gives three independent dimensions to explore. Just an idea — may be too many variables for a 6-hour hackathon, but worth noting as future work or stretch goal.
+
+### 9. Carbon-intensity-aware inference envelope
 Use [Electricity Maps](https://www.electricitymaps.com/) free tier to fetch real-time carbon intensity for the local grid (San Jose / CAISO). Use this as a routing/throttling layer that adapts how OpenClaw serves requests:
 
 - **Low carbon intensity (clean grid):** Use Super 120B at full clocks. Max quality, higher energy ok.
@@ -77,10 +80,25 @@ This makes the routing *reactive to the real world* — not just a static benchm
 
 So the envelope has two real knobs: model selection and clock frequency. Both are validated.
 
-**Open questions for this idea:**
-- Does Electricity Maps free tier have enough API calls for a demo? Rate limits?
-- Latency of the API — can we poll every few minutes and cache?
+**Electricity Maps API (validated):**
+- Endpoint: `GET https://api.electricitymaps.com/v3/carbon-intensity/latest?zone=US-CAL-CISO`
+- Auth: `auth-token: <token>` header. Free tier requires signup at `app.electricitymaps.com`.
+- Returns: `{"zone":"US-CAL-CISO","carbonIntensity":123,...}` — gCO2eq/kWh
+- Near real-time, hourly default (configurable to 5min)
+- Also has `/history` (last 24h) and `/forecast` endpoints
+- Alternative: WattTime (covers CAISO, free tier for basic signal, requires signup)
+- co2signal.com is dead (522 error)
+
+**Mock fallback (if no internet at hackathon):**
+California (CAISO) realistic gCO2/kWh ranges following the duck curve:
+- Midday solar: 80–150 (clean)
+- Afternoon: 200–300
+- Evening peak (gas ramp): 350–450 (dirty)
+- Overnight: 250–350
+
+**Remaining open questions for this idea:**
 - What's the actual tok/s and tok/J impact of clock capping? Need to benchmark (e.g. 1500 MHz vs 3003 MHz).
+- Free tier rate limits — unknown, need to test once we have an API key.
 
 
 

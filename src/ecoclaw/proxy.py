@@ -173,6 +173,9 @@ async def proxy(request: Request, path: str):
     # Rewrite model ID to match currently-loaded model (handles carbon router switches)
     req_json["model"] = st.get().model
 
+    # Disable thinking mode — OpenClaw shows reasoning+content concatenated, causing duplicates
+    req_json.setdefault("chat_template_kwargs", {})["enable_thinking"] = False
+
     # Strip fields vLLM doesn't support (sent by OpenClaw/OpenAI-compatible clients)
     # tool_choice="auto" requires --enable-auto-tool-choice and --tool-call-parser flags
     _VLLM_UNSUPPORTED = {"store", "metadata", "reasoning_effort", "tool_choice", "tools"}

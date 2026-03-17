@@ -1,5 +1,7 @@
 # EcoClaw Setup Guide
 
+**Note:** gpuctl syncs the repo to `~/dev/hackathon` on GB10 (not `~/git/hackathon`).
+
 How to get the full EcoClaw stack running on a fresh GB10. Written as we go — fill in each section when the component is validated.
 
 ## Prerequisites
@@ -78,8 +80,8 @@ screen -dmS vllm bash -lc 'source ~/.profile && ml && \
   vllm serve nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4 \
     --trust-remote-code \
     --max-model-len 4096 \
-    --gpu-memory-utilization 0.6 \
-    --reasoning-parser nano_v3 \
+    --gpu-memory-utilization 0.75 \
+    --reasoning-parser super_v3 \
   2>&1 | tee /tmp/vllm-super.log'
 ```
 
@@ -101,13 +103,13 @@ mkdir -p ~/.config/electricity_maps
 echo "UpuAetadx7a7TBYyMByj" > ~/.config/electricity_maps/api_key
 
 # Run (starts proxy on :8001 + carbon router thread)
-cd ~/git/hackathon/src
-python -m ecoclaw.main
+cd ~/dev/hackathon
+PYTHONPATH=src python -m ecoclaw.main
 ```
 
 The proxy log output goes to stdout. Run in a screen session for persistence:
 ```bash
-screen -dmS proxy bash -lc 'source ~/.profile && ml && cd ~/git/hackathon/src && python -m ecoclaw.main 2>&1 | tee /tmp/proxy.log'
+screen -dmS proxy bash -lc 'source ~/.profile && ml && cd ~/dev/hackathon && PYTHONPATH=src python -m ecoclaw.main 2>&1 | tee /tmp/proxy.log'
 ```
 
 ---
@@ -124,9 +126,9 @@ pnpm ui:build   # required — without this, browser shows "Missing Control UI a
 **Configure:**
 ```bash
 mkdir -p ~/.openclaw/workspace
-cp ~/git/hackathon/config/openclaw/openclaw.json ~/.openclaw/openclaw.json
-cp ~/git/hackathon/config/openclaw-workspace/AGENTS.md ~/.openclaw/workspace/
-cp ~/git/hackathon/config/openclaw-workspace/SOUL.md ~/.openclaw/workspace/
+cp ~/dev/hackathon/config/openclaw/openclaw.json ~/.openclaw/openclaw.json
+cp ~/dev/hackathon/config/openclaw-workspace/AGENTS.md ~/.openclaw/workspace/
+cp ~/dev/hackathon/config/openclaw-workspace/SOUL.md ~/.openclaw/workspace/
 ```
 
 **Start gateway (validated):**
@@ -152,12 +154,17 @@ screen -dmS vllm bash -lc 'source ~/.profile && ml && VLLM_USE_FLASHINFER_MOE_FP
 watch -n5 'curl -s http://localhost:8000/v1/models'
 
 # 3. Start EcoClaw proxy + carbon router
-screen -dmS proxy bash -lc 'source ~/.profile && ml && cd ~/git/hackathon/src && python -m ecoclaw.main 2>&1 | tee /tmp/proxy.log'
+screen -dmS proxy bash -lc 'source ~/.profile && ml && cd ~/dev/hackathon && PYTHONPATH=src python -m ecoclaw.main 2>&1 | tee /tmp/proxy.log'
 
 # 4. Start OpenClaw gateway
 screen -dmS openclaw bash -lc 'cd ~/git/openclaw && VLLM_API_KEY=none npx openclaw gateway --port 18789 --verbose 2>&1 | tee /tmp/openclaw.log'
 
-# 4. Verify
+# 5. Start SSH tunnel for browser access (run on your local machine)
+ssh -N -L 18789:localhost:18789 nvidia@10.1.96.152 &
+# Then open: http://localhost:18789
+# Gateway token: check ~/.openclaw/openclaw.json → gateway.auth.token
+
+# 6. Verify
 curl http://localhost:8000/v1/models   # vLLM
 curl http://localhost:8001/v1/models   # proxy (should match vLLM)
 curl http://10.1.96.152:18789          # OpenClaw WebChat

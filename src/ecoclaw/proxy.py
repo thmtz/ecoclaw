@@ -228,15 +228,22 @@ async def _stream_proxy(request: Request, url: str, body: bytes, headers: dict) 
                             chunk = json.loads(line[6:])
                             # Use real usage from final chunk if available
                             usage = chunk.get("usage")
-                            if usage and usage.get("completion_tokens"):
-                                total_tokens = usage["completion_tokens"]
-                            elif not usage:
+                            if usage is not None:
+                                ct = usage.get("completion_tokens")
+                                if ct:
+                                    total_tokens = ct
+                            else:
+                                # No usage key — count content tokens as fallback
                                 delta = chunk.get("choices", [{}])[0].get("delta", {})
                                 if delta.get("content"):
                                     total_tokens += 1
                         except Exception:
                             pass
                     yield f"{line}\n\n"
+
+        delta_mj = max(0.0, energy_mj() - energy_before)
+        tok_per_j = (total_tokens / (delta_mj / 1000)) if delta_mj > 0 else 0
+        log.info("stream done: tokens=%d, delta_mj=%.1f, tok_per_j=%.2f", total_tokens, delta_mj, tok_per_j)
 
     return StreamingResponse(generate(), media_type="text/event-stream")
 

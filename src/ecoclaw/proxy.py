@@ -4,7 +4,6 @@ Measures NVML energy per request and injects an energy receipt
 into every response (streaming and non-streaming).
 """
 import json
-import time
 import httpx
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import StreamingResponse
@@ -65,15 +64,21 @@ async def proxy(request: Request, path: str):
 
 async def _nonstream_proxy(request: Request, url: str, body: bytes) -> Response:
     energy = {}
-    with measure() as energy:
-        async with httpx.AsyncClient(timeout=300) as client:
-            r = await client.request(
-                method=request.method,
-                url=url,
-                headers={k: v for k, v in request.headers.items() if k.lower() != "host"},
-                content=body,
-            )
-        resp = r.json()
+    try:
+        with measure() as energy:
+            async with httpx.AsyncClient(timeout=300) as client:
+                r = await client.request(
+                    method=request.method,
+                    url=url,
+                    headers={k: v for k, v in request.headers.items() if k.lower() != "host"},
+                    content=body,
+                )
+            resp = r.json()
+    except httpx.ConnectError:
+        return Response(
+            content=json.dumps({"error": {"message": "vLLM backend unavailable", "type": "proxy_error"}}),
+            status_code=502, media_type="application/json",
+        )
 
     total_tokens = resp.get("usage", {}).get("completion_tokens", 0)
     receipt = _format_receipt(energy.get("energy_mj", 0), total_tokens)
@@ -93,6 +98,16 @@ async def _nonstream_proxy(request: Request, url: str, body: bytes) -> Response:
 
 
 async def _stream_proxy(request: Request, url: str, body: bytes) -> StreamingResponse:
+    # Pre-flight check: fail fast if vLLM is unreachable
+    try:
+        async with httpx.AsyncClient(timeout=5) as probe:
+            await probe.get(f"{VLLM_BASE}/health")
+    except (httpx.ConnectError, httpx.TimeoutException):
+        return Response(
+            content=json.dumps({"error": {"message": "vLLM backend unavailable", "type": "proxy_error"}}),
+            status_code=502, media_type="application/json",
+        )
+
     async def generate():
         total_tokens = 0
         energy_before = energy_mj()

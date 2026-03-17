@@ -1721,3 +1721,9 @@ time="2026-03-17T15:30:14-07:00" level=warning msg="error running query" connect
 time="2026-03-17T15:30:14-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=179
 time="2026-03-17T15:30:14-07:00" level=info msg=ConnectionClosed connectionID=179
 time="2026-03-17T15:30:14-07:00" level=info msg=ConnectionClosed connectionID=178
+time="2026-03-17T15:31:09-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=180
+time="2026-03-17T15:31:09-07:00" level=info msg=ConnectionClosed connectionID=180
+time="2026-03-17T15:31:09-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=181
+time="2026-03-17T15:31:09-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=182
+time="2026-03-17T15:31:09-07:00" level=info msg=ConnectionClosed connectionID=181
+time="2026-03-17T15:31:09-07:00" level=info msg=ConnectionClosed connectionID=182

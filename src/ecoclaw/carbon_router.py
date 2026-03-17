@@ -23,7 +23,7 @@ DEFAULT_CONFIG = {
         {"carbon_gt": 300, "model": "nano", "label": "green mode"},
         {"carbon_lte": 300, "model": "super", "label": "performance mode"},
     ],
-    "poll_interval_seconds": 10,
+    "poll_interval_seconds": 86400,  # manual control only via /demo/poll
     "fallback_carbon": 250,
     "hysteresis": 20,
 }

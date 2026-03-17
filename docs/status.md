@@ -2,7 +2,7 @@
 
 **Hackathon day: March 17, 2026** · NVIDIA GTC 2026 "Hack for Impact" · San Jose
 
-**Repo:** `~/git/hackathon` | **GB10:** `gb10-hackathon` (10.1.96.152)
+**Repo:** `~/dev/hackathon` | **GB10:** `gb10-hackathon` (10.1.96.152)
 
 ---
 
@@ -23,7 +23,7 @@ Energy proxy (:8001)  ◄── NVML energy measurement
 vLLM (:8000)
     │
     ▼
-GB10 GPU (Nemotron Super 120B)
+GB10 GPU (Nemotron Nano 30B FP8)
 
 Carbon router (thread in proxy)  ◄── Electricity Maps API (US-CAL-CISO)
     └──► polls every 10 min, switches vLLM model when carbon crosses threshold
@@ -31,17 +31,23 @@ Carbon router (thread in proxy)  ◄── Electricity Maps API (US-CAL-CISO)
 
 ---
 
+## MVP Scope
+
+Energy receipt visible in WebChat for every response. That's the demo. Carbon routing is P2 — it's implemented and works, but not the focus of the judging demo.
+
+---
+
 ## Component Status
 
 | Component | Status | Notes |
 |-|-|-|
-| Nemotron Super 120B NVFP4+MARLIN | ✅ Serving | `:8000`, `--max-model-len 4096`, no reasoning parser yet |
-| Nemotron Nano 30B FP8 | ✅ Ready (not loaded) | Fallback model, CUDA cache warm |
+| Nemotron Nano 30B FP8 | ⏳ Loading | vllm-expert switching from Super 120B; CUDA cache warm |
+| Nemotron Super 120B NVFP4+MARLIN | 🔄 Swapping out | Being replaced by Nano FP8 as primary |
 | Energy proxy | ✅ Running | `:8001`, all OpenAI compat fixes applied |
-| Carbon router | ✅ Running | 52 gCO₂/kWh live from Electricity Maps |
-| OpenClaw gateway | ✅ Running | `:18789`, Nemotron Super as default, points at `:8001` |
+| Carbon router | ✅ Running | Implemented, P2 for demo |
+| OpenClaw gateway | ✅ Running | `:18789`, reconfigured for Nano FP8, AGENTS.md trimmed |
 | SSH tunnel | ✅ Active | `localhost:18789` → GB10 |
-| WebChat | ⏳ Fixing | AGENTS.md too long (>2000 tokens) — openclaw-expert trimming now |
+| WebChat | ⏳ Pending | Waiting on Nano FP8 to finish loading |
 
 ---
 
@@ -51,7 +57,7 @@ Carbon router (thread in proxy)  ◄── Electricity Maps API (US-CAL-CISO)
 - ✅ Energy proxy: NVML measurement, SSE receipt injection, model-ID rewriting
 - ✅ Proxy: Content-Length fix, field stripping (store/tools/tool_choice/metadata/reasoning_effort), max_completion_tokens clamp
 - ✅ Carbon router: live Electricity Maps data, FP8/NVFP4 per-model env + reasoning parsers
-- ✅ OpenClaw: reconfigured → `:8001`, Nemotron models, SSH tunnel
+- ✅ OpenClaw: reconfigured → `:8001`, Nano FP8 as default, AGENTS.md trimmed
 - ✅ Reasoning parser paths confirmed (Super: `super_v3`, Nano FP8: `nano_v3`)
 - ✅ setup.md: GB10 paths fixed, SSH tunnel step added, Super 120B flags corrected
 - ✅ demo-script.md: complete, recovery commands fixed
@@ -62,11 +68,9 @@ Carbon router (thread in proxy)  ◄── Electricity Maps API (US-CAL-CISO)
 
 | # | Item | Owner | Priority |
 |-|-|-|-|
-| 1 | Trim AGENTS.md to <300 tokens | openclaw-expert ⏳ | **CRITICAL** |
+| 1 | Nano FP8 finishes loading | vllm-expert ⏳ | **CRITICAL** |
 | 2 | WebChat end-to-end test | You | After #1 |
-| 3 | Restart Super 120B with `--reasoning-parser super_v3` | vllm-expert | High — after #2 |
-| 4 | Carbon router model switch demo | team lead | High — after #2 |
-| 5 | Demo run-through + timing | You | Final step |
+| 3 | Demo run-through + timing | You | Final step |
 
 ---
 
@@ -79,8 +83,8 @@ Carbon router (thread in proxy)  ◄── Electricity Maps API (US-CAL-CISO)
 | vLLM 400: `max_completion_tokens` too large | ✅ Fixed | Proxy clamps to 2048 |
 | Proxy Content-Length mismatch | ✅ Fixed | Strip `content-length` header on modified requests |
 | Carbon router startup model switch bug | ✅ Fixed | First poll deferred |
-| AGENTS.md too long (>2000 tokens) | ⏳ In progress | openclaw-expert trimming to <300 tokens |
-| Super 120B missing reasoning parser | ⏳ Pending | Restart after WebChat confirmed working |
+| AGENTS.md too long (>2000 tokens) | ✅ Fixed | Trimmed to <300 tokens |
+| Super 120B missing reasoning parser | ✅ Fixed | `--reasoning-parser super_v3` in launch command |
 
 ---
 
@@ -105,8 +109,8 @@ gpuctl exec gb10-hackathon "fuser -k 8001/tcp 2>/dev/null; sleep 2; screen -dmS 
 # Restart OpenClaw
 gpuctl exec gb10-hackathon "screen -S openclaw -X quit; sleep 1; screen -S openclaw -dm bash -c 'cd ~/git/openclaw && VLLM_API_KEY=none npx openclaw gateway --port 18789 --bind lan --force --verbose 2>&1 | tee /tmp/openclaw-gateway.log'"
 
-# Restart Super 120B WITH reasoning parser (run after WebChat confirmed)
-gpuctl exec gb10-hackathon "screen -S vllm -X quit; sleep 2; screen -dmS vllm bash -lc 'source ~/.profile && ml && VLLM_USE_FLASHINFER_MOE_FP4=0 VLLM_NVFP4_GEMM_BACKEND=marlin vllm serve nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4 --trust-remote-code --max-model-len 4096 --gpu-memory-utilization 0.75 --reasoning-parser super_v3 --reasoning-parser-plugin ~/.cache/huggingface/hub/models--nvidia--NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4/snapshots/167959da964ab08b30211f71e68f6670eaa87966/super_v3_reasoning_parser.py 2>&1 | tee /tmp/vllm-super.log'"
+# Start Nano FP8
+gpuctl exec gb10-hackathon "screen -S vllm -X quit; sleep 2; screen -dmS vllm bash -lc 'source ~/.profile && ml && vllm serve nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8 --trust-remote-code --max-model-len 4096 --gpu-memory-utilization 0.75 --reasoning-parser nano_v3 2>&1 | tee /tmp/vllm-nano.log'"
 ```
 
 ---
@@ -115,9 +119,9 @@ gpuctl exec gb10-hackathon "screen -S vllm -X quit; sleep 2; screen -dmS vllm ba
 
 | Item | Value |
 |-|-|
-| Clean grid model | `nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4` |
-| Dirty grid model | `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8` |
-| Carbon threshold | 300 gCO₂/kWh (current: 52 — very clean) |
+| Primary model | `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8` (Nano FP8) |
+| Fallback model | `nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4` (Super, carbon router) |
+| Carbon threshold | 300 gCO₂/kWh |
 | Electricity Maps API key | `~/.config/electricity_maps/api_key` |
 | OpenClaw auth token | `439368c7ef3a54d50317db8d985c5b2829ab2e494ec24e26` |
 | WebChat URL | `http://localhost:18789` (via SSH tunnel) |

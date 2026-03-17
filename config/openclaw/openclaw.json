@@ -2,13 +2,17 @@
   "models": {
     "providers": {
       "vllm": {
-        "baseUrl": "http://127.0.0.1:8000/v1",
+        "baseUrl": "http://127.0.0.1:8001/v1",
         "apiKey": "none",
         "api": "openai-completions",
         "models": [
           {
-            "id": "Qwen/Qwen2.5-0.5B-Instruct",
-            "name": "Qwen 2.5 0.5B"
+            "id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8",
+            "name": "Nemotron Nano 30B FP8"
+          },
+          {
+            "id": "nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4",
+            "name": "Nemotron Super 120B"
           }
         ]
       }
@@ -17,17 +21,24 @@
   "agents": {
     "defaults": {
       "model": {
-        "primary": "vllm/Qwen/Qwen2.5-0.5B-Instruct"
+        "primary": "vllm/nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8"
       },
       "memorySearch": {
         "enabled": false
       }
     }
   },
+  "commands": {
+    "native": false,
+    "nativeSkills": false,
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
   "gateway": {
     "mode": "local",
-    "controlUi": {
-      "allowedOrigins": ["http://10.1.96.152:18789"]
+    "auth": {
+      "mode": "token",
+      "token": "439368c7ef3a54d50317db8d985c5b2829ab2e494ec24e26"
     },
     "http": {
       "endpoints": {
@@ -35,6 +46,13 @@
           "enabled": true
         }
       }
+    },
+    "controlUi": {
+      "allowedOrigins": [
+        "http://10.1.96.152:18789",
+        "http://localhost:18789"
+      ],
+      "dangerouslyAllowHostHeaderOriginFallback": true
     }
   }
 }

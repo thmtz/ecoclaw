@@ -25,7 +25,7 @@ Energy Proxy  ◄──── NVML (totalEnergyConsumption)
 vLLM (:8000)
  │  serves one Nemotron model at a time
  ▼
-GB10 GPU (Nemotron Nano 30B or Super 120B, NVFP4+MARLIN)
+GB10 GPU (Nemotron Nano 30B FP8 or Super 120B NVFP4+MARLIN)
 
 Carbon Router  ◄──── Electricity Maps API (US-CAL-CISO)
  │  polls grid carbon intensity, reads config thresholds
@@ -47,12 +47,12 @@ Serves one Nemotron model at a time on `:8000`. OpenAI-compatible API. Model swi
 ### Nemotron models
 | Model | Active params | Memory | tok/s (est) | Role |
 |-|-|-|-|-|
-| Nano 30B-A3B | 3B | ~15–60GB (quant-dependent) | ~72 | High-carbon / green mode |
-| Super 120B-A12B | 12B | ~60–103GB (quant-dependent) | ~15-17 | Low-carbon / performance mode |
+| Nano 30B-A3B | 3B | ~15–60GB (FP8, native sm_121) | ~72 | High-carbon / green mode — **primary** |
+| Super 120B-A12B | 12B | ~60–103GB (NVFP4+MARLIN) | ~15-17 | Low-carbon / performance mode — carbon router |
 
 Both are MoE hybrid Mamba-Transformer. Cannot run simultaneously.
 
-**Quantization: NVFP4 + MARLIN backend (confirmed working).** CUTLASS-based NVFP4 kernels fail on sm_121 (PyTorch 2.10 caps at sm_120). Workaround: `VLLM_USE_FLASHINFER_MOE_FP4=0 VLLM_NVFP4_GEMM_BACKEND=marlin`. MARLIN is a software fallback that runs on any SM — slower than native hardware kernels but produces correct output. FP8 being evaluated as a potential faster alternative.
+**Quantization:** Nano uses **FP8** — native sm_121 support on Blackwell, no workaround needed. Super uses **NVFP4 + MARLIN backend**: CUTLASS-based NVFP4 kernels cap at sm_120 (PyTorch 2.10 limitation), so we set `VLLM_USE_FLASHINFER_MOE_FP4=0 VLLM_NVFP4_GEMM_BACKEND=marlin`. MARLIN is a software fallback that runs on any SM — slightly slower than native hardware kernels but produces correct output. NVFP4+MARLIN remains the fallback path for Super if FP8 weights are unavailable.
 
 See: [../reference/vllm.md](../reference/vllm.md).
 

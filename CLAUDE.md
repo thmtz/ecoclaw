@@ -20,6 +20,7 @@ The instance was set up with `gpuctl prepare gb10-hackathon -m Qwen/Qwen2.5-0.5B
 
 ## Details
 
+- **[Current status](docs/status.md) — start here for active session context**
 - [README](README.md) — hackathon context, our angle, hardware specs
 - [Brainstorm](docs/reference/brainstorm.md) — capabilities, ideas, open questions
 - [Setup guide](docs/setup.md) — install, configure, and start everything

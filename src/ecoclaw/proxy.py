@@ -22,7 +22,7 @@ PROXY_PORT = 8001
 MOCK_FILE = Path.home() / ".ecoclaw" / "mock_carbon"
 
 _last_receipt: dict[str, float] = {}
-RECEIPT_COOLDOWN = 10.0  # seconds
+RECEIPT_COOLDOWN = 60.0  # seconds — OpenClaw makes 2 calls per turn; 60s covers even slow responses
 
 # Cumulative session energy tracking
 _session_lock = threading.Lock()

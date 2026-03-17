@@ -135,10 +135,10 @@ Neuralwatt is our company — we build production GPU energy optimization tools.
 |-|-|-|
 | vLLM OOM or crash | OpenClaw shows connection error | SSH in (`gpuctl ssh gb10-hackathon`), restart vLLM manually with the working launch command. ~2 min. |
 | vLLM slow to start after model switch | Chat hangs during carbon router switch | Talk through the architecture diagram while waiting. If >3 min, check logs: `gpuctl exec gb10-hackathon "screen -S vllm -X hardcopy /tmp/vllm.log && cat /tmp/vllm.log"` |
-| Energy proxy crash | Responses come through without receipts | Restart: `gpuctl exec gb10-hackathon "python ecoclaw.py &"`. OpenClaw still works — it just hits vLLM directly without energy data. |
+| Energy proxy crash | Responses come through without receipts | Restart: `gpuctl exec gb10-hackathon "cd ~/dev/hackathon && PYTHONPATH=src python -m ecoclaw.main &"`. OpenClaw still works — it just hits vLLM directly without energy data. |
 | Electricity Maps API down | Carbon router uses fallback value | This is by design. Mention it: "We use a configurable fallback when the API is unavailable — for the demo we can also simulate carbon spikes." |
 | Carbon router doesn't trigger switch | No model change visible | Manually trigger: edit config to lower threshold, or use the mock endpoint. Have the command ready in a terminal tab. |
-| OpenClaw UI unresponsive | Blank page or WebSocket errors | Refresh browser. If that fails: `gpuctl exec gb10-hackathon "screen -S openclaw -X quit && cd ~/openclaw && node dist/index.js &"` |
+| OpenClaw UI unresponsive | Blank page or WebSocket errors | Refresh browser. If that fails: `gpuctl exec gb10-hackathon "screen -S openclaw -X quit && cd ~/git/openclaw && node dist/index.js &"` |
 | Network to GB10 down | Can't reach `10.1.96.152` | Check wifi. The GB10 is on the local event network. Have a hotspot as backup. Worst case: show the architecture slides and recorded demo video (pre-record a 2-min walkthrough as insurance). |
 | NVML counter returns 0 / stale value | Receipt shows 0 mJ | Known edge case if GPU was recently reset. Run a warmup query before the demo to prime the counter. |
 

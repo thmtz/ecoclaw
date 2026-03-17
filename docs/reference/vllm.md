@@ -50,15 +50,71 @@ Disables BOTH torch.inductor AND CUDA graphs (`-cc.mode=NONE -cc.cudagraph_mode=
 
 **Bottom line:** The full CUDA graph startup (~30-45 min first run, faster after cache) is required for correct NVFP4 MoE inference. The cache persists at `~/.cache/vllm/torch_compile_cache/` — subsequent startups are significantly faster.
 
-## Nemotron models — required flags
+## Nemotron-3 Nano — NVFP4 backend compatibility
 
-Both Nemotron models require `--trust-remote-code` due to custom model code in the repo.
+**The NVFP4 quantized model has kernel compatibility issues on GB10 (sm_121).** All known NVFP4 GEMM backends fail or produce NaN on this hardware:
+
+| Backend | Result |
+|-|-|
+| `FLASHINFER_CUTLASS` (default) | Autotuner skips failing tactics; surviving tactics produce NaN logits → empty content |
+| `VLLM_CUTLASS` | `RuntimeError: Error Internal` at engine init |
+| `MARLIN` | **Works** — produces real output, correct inference |
+
+**Root cause:** PyTorch 2.10 supports CUDA capability up to sm_120; GB10 is sm_121. CUTLASS GEMM kernels for NVFP4 fail to initialize. NaN logits cause sampler to pick tokens that decode to empty strings.
+
+**Diagnosis markers:**
+- `ValueError: Out of range float values are not JSON compliant: nan` in server logs when requesting logprobs
+- Completion tokens > 0 but `content: ""` in every response (streaming and non-streaming)
+- `Skipping tactic ... Failed to initialize cutlass TMA WS grouped gemm` in autotuner logs
+
+### Env vars for backend selection
 
 ```bash
-vllm serve nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-NVFP4 \
-  --trust-remote-code \
-  --max-model-len 4096
+# Use MARLIN for both linear and MoE (avoids CUTLASS entirely)
+VLLM_USE_FLASHINFER_MOE_FP4=0 VLLM_NVFP4_GEMM_BACKEND=marlin
+
+# Use vLLM CUTLASS (not FlashInfer) — currently crashes on sm_121
+VLLM_USE_FLASHINFER_MOE_FP4=0 VLLM_NVFP4_GEMM_BACKEND=cutlass
 ```
+
+### Working launch command (validated on GB10)
+
+```bash
+screen -dmS vllm bash -lc 'source ~/.profile && ml && \
+  VLLM_USE_FLASHINFER_MOE_FP4=0 VLLM_NVFP4_GEMM_BACKEND=marlin \
+  vllm serve nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-NVFP4 \
+    --trust-remote-code \
+    --max-model-len 32768 \
+    --reasoning-parser nano_v3 \
+    --reasoning-parser-plugin ~/.cache/huggingface/hub/models--nvidia--NVIDIA-Nemotron-3-Nano-30B-A3B-NVFP4/snapshots/ce1b118ae66ec705d02c241525192832eb045fd3/nano_v3_reasoning_parser.py \
+  2>&1 | tee /tmp/vllm-nano.log'
+```
+
+**Chat API with thinking enabled (default):**
+```bash
+curl http://localhost:8000/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{"model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-NVFP4",
+       "messages": [{"role": "user", "content": "..."}],
+       "max_tokens": 10000}'
+```
+Returns: `reasoning` field = thinking trace, `content` field = final answer.
+
+**Chat API with thinking disabled (faster):**
+```bash
+curl http://localhost:8000/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{"model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-NVFP4",
+       "messages": [{"role": "user", "content": "..."}],
+       "max_tokens": 256,
+       "chat_template_kwargs": {"enable_thinking": false}}'
+```
+
+**Important:** Use `max_tokens >= 1000` in reasoning mode — the thinking trace alone can consume hundreds of tokens before the final answer appears.
+
+### Nemotron models — required flags
+
+Both Nemotron models require `--trust-remote-code` due to custom model code in the repo.
 
 ## Model memory usage (per-process, validated)
 

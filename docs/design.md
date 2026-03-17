@@ -25,7 +25,7 @@ Energy Proxy  ◄──── NVML (totalEnergyConsumption)
 vLLM (:8000)
  │  serves one Nemotron model at a time
  ▼
-GB10 GPU (Nemotron Nano 30B or Super 120B, NVFP4)
+GB10 GPU (Nemotron Nano 30B or Super 120B, NVFP4+MARLIN)
 
 Carbon Router  ◄──── Electricity Maps API (US-CAL-CISO)
  │  polls grid carbon intensity, reads config thresholds
@@ -52,19 +52,19 @@ Serves one Nemotron model at a time on `:8000`. OpenAI-compatible API. Model swi
 
 Both are MoE hybrid Mamba-Transformer. Cannot run simultaneously.
 
-**⚠ Quantization TBD:** NVFP4 variants may be broken on GB10 (sm_121) due to a PyTorch sm_120 ceiling — CUTLASS TMA WS grouped GEMM kernels fail, producing NaN logits. vllm-expert is investigating. Fallback options: FP8 (~16GB Nano, ~60GB Super) or BF16 (~60GB Nano — Super BF16 is too large at ~240GB). Final quant choice pending validation.
+**Quantization: NVFP4 + MARLIN backend (confirmed working).** CUTLASS-based NVFP4 kernels fail on sm_121 (PyTorch 2.10 caps at sm_120). Workaround: `VLLM_USE_FLASHINFER_MOE_FP4=0 VLLM_NVFP4_GEMM_BACKEND=marlin`. MARLIN is a software fallback that runs on any SM — slower than native hardware kernels but produces correct output. FP8 being evaluated as a potential faster alternative.
 
 See: [reference/vllm.md](reference/vllm.md).
 
 ### Energy proxy
 Thin Python middleware between OpenClaw and vLLM. Snapshots `nvmlDeviceGetTotalEnergyConsumption` before and after each inference call. The delta is the exact energy consumed — no polling or averaging needed. Injects energy metadata (mJ, mWh, tok/J) into the response so the OpenClaw skill can surface it.
 
-Placement TBD — see [design-energy-proxy.md](design-energy-proxy.md) (to be written).
+See [design-energy-proxy.md](design-energy-proxy.md).
 
 ### Carbon router
 Polls Electricity Maps API (`GET /v3/carbon-intensity/latest?zone=US-CAL-CISO`) on a slow interval (e.g. every 10 min). Compares current carbon intensity against thresholds defined in a config file. When a threshold is crossed, triggers a model switch (restart vLLM with the appropriate model). Also surfaces current carbon + active mode in the OpenClaw UI via the energy skill.
 
-Config is a simple file: when `carbonIntensity > X`, use model Y, clock profile Z. See [reference/electricity-maps.md](reference/electricity-maps.md). Fallback to mock data if no internet.
+Config is a simple YAML file: when `carbonIntensity > X`, use model Y. Hysteresis band prevents flapping. See [design-carbon-router.md](design-carbon-router.md) and [reference/electricity-maps.md](reference/electricity-maps.md). Fallback to mock data if no internet.
 
 ### NVML
 `nvmlDeviceGetTotalEnergyConsumption` returns a hardware-integrated mJ counter. Diff before/after = exact energy for that request. Confirmed working on GB10. Power limit and memory reporting not available. See: [reference/gb10-validated.md](reference/gb10-validated.md).
@@ -137,7 +137,8 @@ Install NemoClaw on top of OpenClaw for enterprise-grade sandboxing and security
 
 ## Open questions
 
-- Energy proxy: separate FastAPI process vs OpenClaw plugin? (See [design-energy-proxy.md](design-energy-proxy.md))
-- Does OpenClaw's skill system let us inject a footer into every response, or do we need a plugin?
-- How does model switching surface to the user mid-session? Silent? Notification?
-- Include GPU clock capping as a second lever in the carbon router, or cut for MVP?
+- **Energy proxy streaming**: Does appending an extra SSE chunk after `[DONE]` pass through OpenClaw cleanly, or must the footer be injected into the last content delta? (delegated to openclaw-expert)
+- **NVFP4 on GB10**: Resolved — MARLIN backend works. Final launch config (max-model-len, reasoning-parser flag) being finalized by vllm-expert. FP8 being evaluated as potential faster alternative.
+- **Model switching UX**: Resolved — carbon router sends a system message before triggering the vLLM restart: "Switching to Nemotron Nano — high carbon on grid. Back in ~2 min."
+- **Footer injection**: Resolved — proxy appends formatted footer directly to stream. AGENTS.md as belt-and-suspenders fallback. No plugin needed.
+- **GPU clock capping**: Cut from MVP. Carbon router uses model selection only. Clock cap is a stretch goal.

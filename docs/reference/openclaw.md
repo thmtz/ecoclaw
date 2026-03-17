@@ -4,23 +4,28 @@ Version: 2026.3.14. Repo cloned on GB10 at `~/git/openclaw`.
 
 ## Injecting a footer into every response
 
-**Answer: use `AGENTS.md` in the workspace, not a skill.**
+**TL;DR: The energy proxy is the only truly deterministic option. AGENTS.md is the simplest. A Plugin `before_prompt_build` hook is the middle ground.**
 
-Skills are loaded *on demand* — the agent reads a SKILL.md when it decides the skill is relevant. There is no guarantee a skill triggers on every response. Skills cannot unconditionally inject content.
+### What doesn't work: SKILL.md
 
-The reliable mechanism is **workspace bootstrap files**, which are injected into the system prompt on *every* agent turn:
+Skills are loaded *on demand* — the agent reads a SKILL.md when it decides the skill is relevant to the current request. There is no mechanism to load a skill unconditionally for every response. **Do not rely on SKILL.md for unconditional footer injection.**
 
-- `AGENTS.md` — procedural instructions, standard operating procedures
-- `SOUL.md` — persona and tone
-- `TOOLS.md` — tool usage instructions
+### Option A: Energy proxy (deterministic — recommended)
 
-By adding an instruction to `AGENTS.md` like "Always end every response with an energy receipt", the agent will follow it unconditionally. This is the simplest path.
+The proxy sits between OpenClaw and vLLM. It can append the footer text directly to the last streaming chunk before OpenClaw ever sees it. This is **100% deterministic** — no LLM compliance required, no plugin code.
 
-Alternatively, a **Plugin** (TypeScript/JS runtime code) can intercept every response at the transport layer before it reaches the user — this is more reliable than prompt instructions but requires writing plugin code.
+```
+OpenClaw → energy proxy (:8001) → vLLM (:8000)
+                ↑
+         appends footer to final chunk
+         using real NVML delta
+```
 
-### Recommended approach for MVP
+Point OpenClaw's `baseUrl` at the proxy port instead of vLLM directly. The proxy handles the NVML delta and formats the footer before returning the response.
 
-Put the instruction in `AGENTS.md`:
+### Option B: AGENTS.md instruction (probabilistic — simplest)
+
+`AGENTS.md` (and `SOUL.md`) are injected into the system prompt on every turn. An instruction here tells the LLM to append the footer.
 
 ```markdown
 ## Energy Receipt
@@ -34,8 +39,46 @@ values returned by the energy proxy:
 ---
 ```
 
-The energy proxy injects these values as extra fields in the API response,
-which an OpenClaw skill or AGENTS.md instruction can reference.
+**Limitation:** The LLM may forget, truncate, or skip it — especially on long responses. Useful as a belt-and-suspenders fallback, not as the primary mechanism.
+
+### Option C: Plugin `before_prompt_build` hook (reliable, requires TypeScript)
+
+A plugin can register a `before_prompt_build` hook via `api.on(...)` that fires before every LLM call. It can inject into the system prompt via `appendSystemContext`:
+
+```typescript
+export default function register(api) {
+  api.on("before_prompt_build", (event, ctx) => {
+    return {
+      appendSystemContext: "Always end your response with the energy receipt block."
+    };
+  });
+}
+```
+
+More reliable than AGENTS.md alone (enforced every turn via plugin code), but still probabilistic — the LLM generates the actual footer text. Requires plugin development.
+
+**Note:** Can be disabled by operators: `plugins.entries.<id>.hooks.allowPromptInjection: false`
+
+### Hook limitations
+
+No hook can post-process or modify the **outgoing response text**. Key events:
+
+| Event | When | Modifies response? |
+|-|-|-|
+| `before_prompt_build` | Before LLM call | System prompt only |
+| `message:sent` | After response sent | No (fires after send) |
+| `message:received` | Inbound message | No |
+
+There is no `message:before_send` or response transformer hook. The response text itself can only be modified at the proxy layer.
+
+### Recommended MVP approach
+
+| Layer | Role | Reliability |
+|-|-|-|
+| Energy proxy | Appends real footer with NVML data | Deterministic |
+| AGENTS.md | Fallback instruction to LLM | Probabilistic |
+
+Point OpenClaw at the energy proxy port. Proxy appends the footer. Optionally add an AGENTS.md instruction so the LLM knows the format context.
 
 ## Connecting OpenClaw to vLLM
 
@@ -109,5 +152,5 @@ openclaw gateway --port 18789 --verbose
 
 ## Open questions for EcoClaw
 
-- How does the energy proxy inject per-response metadata that AGENTS.md can reference? The proxy returns standard OpenAI response format — we need a mechanism to surface energy fields to the agent.
-- Does pointing OpenClaw at the energy proxy (`http://localhost:8001/v1`) work transparently, or does the vLLM provider hardcode `localhost:8000`? Check `baseUrl` override.
+- Does pointing OpenClaw at the energy proxy (`http://localhost:8001/v1`) work transparently? Almost certainly yes — vLLM provider uses the configured `baseUrl`. Set `baseUrl` in explicit config to override the default `localhost:8000`.
+- AGENTS.md cannot reference dynamic proxy data — it's static text loaded at session start. The proxy must append the formatted footer (with actual NVML numbers) directly to the response stream.

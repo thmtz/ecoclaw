@@ -242,8 +242,14 @@ def _demo_poll():
         apply_carbon_action(new_key, label)
         _current_model_key = new_key
     else:
-        # No switch needed — still update mode label to reflect current carbon state
-        st.update(mode=_current_label(carbon, config, _current_model_key))
+        # No switch needed — still update mode + apply/remove freq cap to match current state
+        label = _current_label(carbon, config, _current_model_key)
+        if _current_model_key == "nano":
+            _apply_freq_cap(300, 1000)
+            st.update(mode=label, model_short=f"{MODELS['nano']['short']} · throttled @ 1000 MHz")
+        else:
+            _reset_freq_cap()
+            st.update(mode=label, model_short=f"{MODELS['super']['short']} · full speed @ 2398 MHz")
 
 
 def run(initial_model_key: str = "nano", poll_event: threading.Event | None = None):
@@ -267,9 +273,14 @@ def run(initial_model_key: str = "nano", poll_event: threading.Event | None = No
         st.update(carbon_gco2=carbon)
 
         if first_poll:
-            # On startup, accept whatever model is currently running. Only log what
-            # we would do — don't kill a running vLLM instance on first check.
-            st.update(mode=_current_label(carbon, config, current_model_key))
+            # On startup, apply freq cap to match current carbon state, then defer model switch.
+            label = _current_label(carbon, config, current_model_key)
+            if current_model_key == "nano":
+                _apply_freq_cap(300, 1000)
+                st.update(mode=label, model_short=f"{MODELS['nano']['short']} · throttled @ 1000 MHz")
+            else:
+                _reset_freq_cap()
+                st.update(mode=label, model_short=f"{MODELS['super']['short']} · full speed @ 2398 MHz")
             new_model_key, label = select_model(carbon, config, current_model_key)
             if new_model_key and new_model_key != current_model_key:
                 log.info(

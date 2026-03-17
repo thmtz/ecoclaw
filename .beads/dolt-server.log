@@ -1,0 +1,1347 @@
+Starting server with Config HP="127.0.0.1:60231"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:10:36-07:00" level=info msg="Creating root@localhost superuser"
+time="2026-03-17T15:10:36-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:10:36-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:10:36-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:10:36-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:10:36-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:10:36-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:10:36-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:10:36-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:10:37-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:10:37-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:10:37-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:10:37-07:00" level=warning msg="error running query" connectTime="2026-03-17 15:10:37.060327 -0700 PDT m=+0.256638001" connectionDb=hackathon connectionID=4 error="table not found: config" queryTime="2026-03-17 15:10:37.060732 -0700 PDT m=+0.257043001"
+time="2026-03-17T15:10:37-07:00" level=warning msg="error running query" connectTime="2026-03-17 15:10:37.060327 -0700 PDT m=+0.256638001" connectionDb=hackathon connectionID=4 error="Duplicate key name 'idx_issues_issue_type'" queryTime="2026-03-17 15:10:37.160123 -0700 PDT m=+0.356433251"
+time="2026-03-17T15:10:37-07:00" level=warning msg="error running query" connectTime="2026-03-17 15:10:37.060327 -0700 PDT m=+0.256638001" connectionDb=hackathon connectionID=4 error="foreign key `fk_dep_depends_on` was not found on the table `dependencies`" queryTime="2026-03-17 15:10:37.160286 -0700 PDT m=+0.356596876"
+time="2026-03-17T15:10:37-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:10:37-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:10:37-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=6
+time="2026-03-17T15:10:37-07:00" level=info msg=ConnectionClosed connectionID=6
+time="2026-03-17T15:10:37-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:10:37-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=7
+time="2026-03-17T15:10:37-07:00" level=info msg=ConnectionClosed connectionID=7
+time="2026-03-17T15:10:37-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:10:37-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60253"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:10:43-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:10:43-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:10:43-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:10:43-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:10:43-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:10:43-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:10:43-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:10:43-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:10:43-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:10:43-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:10:43-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:10:43-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:10:43-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:10:43-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:10:43-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:10:43-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60268"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:10:48-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:10:48-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:10:48-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:10:48-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:10:48-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:10:48-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:10:48-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:10:48-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:10:48-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:10:48-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:10:48-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:10:48-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:10:48-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:10:48-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:10:48-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:10:48-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60283"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:10:53-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:10:53-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:10:53-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:10:53-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:10:54-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:10:54-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:10:54-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:10:54-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:10:54-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:10:54-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:10:54-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:10:54-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:10:54-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:10:54-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:10:54-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:10:54-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60306"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:11:04-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:11:04-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:11:04-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:11:04-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:11:04-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:11:04-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:11:04-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:11:04-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:11:04-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:11:04-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:11:04-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:11:04-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:11:04-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:11:04-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:11:04-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:11:04-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60320"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:11:10-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:11:10-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:11:10-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:11:10-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:11:10-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:11:10-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:11:10-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:11:10-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:11:10-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:11:10-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:11:10-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:11:10-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:11:10-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:11:10-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:11:10-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:11:10-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60335"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:11:15-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:11:15-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:11:15-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:11:15-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:11:15-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:11:15-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:11:15-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:11:15-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:11:15-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:11:15-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:11:15-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:11:15-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:11:15-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:11:15-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:11:15-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:11:15-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60349"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:11:21-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:11:21-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:11:21-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:11:21-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:11:21-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:11:21-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:11:21-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:11:21-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:11:21-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:11:21-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:11:21-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:11:21-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:11:21-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:11:21-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:11:21-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:11:21-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60362"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:11:26-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:11:26-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:11:26-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:11:26-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:11:26-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:11:26-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:11:26-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:11:26-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:11:26-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:11:26-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:11:26-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:11:26-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:11:26-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:11:26-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:11:26-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:11:26-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60384"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:11:32-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:11:32-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:11:32-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:11:32-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:11:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:11:32-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:11:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:11:32-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:11:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:11:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:11:32-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:11:32-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:11:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:11:32-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:11:32-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:11:32-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60398"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:11:37-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:11:37-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:11:37-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:11:37-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:11:37-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:11:37-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:11:37-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:11:37-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:11:37-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:11:38-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:11:38-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:11:38-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:11:38-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:11:38-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:11:38-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:11:38-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60411"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:11:43-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:11:43-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:11:43-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:11:43-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:11:43-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:11:43-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:11:43-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:11:43-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:11:43-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:11:43-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:11:43-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:11:43-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:11:43-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:11:43-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:11:43-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:11:43-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60426"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:11:48-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:11:48-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:11:48-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:11:48-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:11:48-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:11:48-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:11:48-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:11:48-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:11:48-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:11:48-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:11:48-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:11:48-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:11:48-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:11:48-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:11:48-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:11:48-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60444"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:11:54-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:11:54-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:11:54-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:11:54-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:11:54-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:11:54-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:11:54-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:11:54-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:11:54-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:11:54-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:11:54-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:11:54-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:11:54-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:11:54-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:11:54-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:11:54-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60457"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:11:59-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:11:59-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:11:59-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:11:59-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:11:59-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:11:59-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:11:59-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:11:59-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:11:59-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:11:59-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:11:59-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:11:59-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:11:59-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:11:59-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:11:59-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:11:59-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60475"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:12:04-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:12:04-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:12:04-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:12:04-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:12:05-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:12:05-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:12:05-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:12:05-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:12:05-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:12:05-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:12:05-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:12:05-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:12:05-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:12:05-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:12:05-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:12:05-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60489"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:12:10-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:12:10-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:12:10-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:12:10-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:12:10-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:12:10-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:12:10-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:12:10-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:12:10-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:12:10-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:12:10-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:12:10-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:12:10-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:12:10-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:12:10-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:12:10-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60504"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:12:15-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:12:15-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:12:15-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:12:15-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:12:15-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:12:15-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:12:15-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:12:15-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:12:15-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:12:15-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:12:15-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:12:15-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:12:15-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:12:15-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:12:15-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:12:15-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60518"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:12:21-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:12:21-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:12:21-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:12:21-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:12:21-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:12:21-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:12:21-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:12:21-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:12:21-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:12:21-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:12:21-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:12:21-07:00" level=warning msg="error running query" connectTime="2026-03-17 15:12:21.379377 -0700 PDT m=+0.198812292" connectionDb=hackathon connectionID=4 error="nothing to commit" queryTime="2026-03-17 15:12:21.389062 -0700 PDT m=+0.208497584"
+time="2026-03-17T15:12:21-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:12:21-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:12:21-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=6
+time="2026-03-17T15:12:21-07:00" level=info msg=ConnectionClosed connectionID=6
+time="2026-03-17T15:12:21-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:12:21-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=7
+time="2026-03-17T15:12:21-07:00" level=info msg=ConnectionClosed connectionID=7
+time="2026-03-17T15:12:21-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:12:21-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60540"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:12:27-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:12:27-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:12:27-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:12:27-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:12:27-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:12:27-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:12:27-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:12:27-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:12:27-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:12:27-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:12:27-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:12:27-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:12:27-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:12:27-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:12:27-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:12:27-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60556"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:12:32-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:12:32-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:12:32-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:12:32-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:12:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:12:32-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:12:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:12:32-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:12:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:12:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:12:32-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:12:32-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:12:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:12:32-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:12:32-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:12:32-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60578"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:12:37-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:12:37-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:12:37-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:12:37-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:12:37-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:12:37-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:12:37-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:12:37-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:12:37-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:12:37-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:12:37-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:12:37-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:12:38-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:12:38-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:12:38-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:12:38-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60591"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:12:43-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:12:43-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:12:43-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:12:43-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:12:43-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:12:43-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:12:43-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:12:43-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:12:43-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:12:43-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:12:43-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:12:43-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:12:43-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:12:43-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:12:43-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:12:43-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60611"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:12:48-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:12:48-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:12:48-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:12:48-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:12:48-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:12:48-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:12:48-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:12:48-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:12:48-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:12:48-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:12:48-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:12:48-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:12:48-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:12:48-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:12:48-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:12:48-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60624"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:12:54-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:12:54-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:12:54-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:12:54-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:12:54-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:12:54-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:12:54-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:12:54-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:12:54-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:12:54-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:12:54-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:12:54-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:12:54-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:12:54-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:12:54-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:12:54-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60637"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:12:59-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:12:59-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:12:59-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:12:59-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:12:59-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:12:59-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:12:59-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:12:59-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:12:59-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:12:59-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:12:59-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:12:59-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:12:59-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:12:59-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:12:59-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:12:59-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60659"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:13:04-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:13:04-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:13:04-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:13:04-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:13:05-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:13:05-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:13:05-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:13:05-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:13:05-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:13:05-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:13:05-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:13:05-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:13:05-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:13:05-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:13:05-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:13:05-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60673"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:13:10-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:13:10-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:13:10-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:13:10-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:13:10-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:13:10-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:13:10-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:13:10-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:13:10-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:13:10-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:13:10-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:13:10-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:13:10-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:13:10-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:13:10-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:13:10-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60698"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:13:15-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:13:15-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:13:15-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:13:15-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:13:15-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:13:15-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:13:15-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:13:15-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:13:15-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:13:15-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:13:15-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:13:15-07:00" level=warning msg="error running query" connectTime="2026-03-17 15:13:15.915258 -0700 PDT m=+0.198515418" connectionDb=hackathon connectionID=4 error="nothing to commit" queryTime="2026-03-17 15:13:15.923903 -0700 PDT m=+0.207160043"
+time="2026-03-17T15:13:16-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:13:16-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:13:16-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=6
+time="2026-03-17T15:13:16-07:00" level=info msg=ConnectionClosed connectionID=6
+time="2026-03-17T15:13:16-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:13:16-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=7
+time="2026-03-17T15:13:16-07:00" level=info msg=ConnectionClosed connectionID=7
+time="2026-03-17T15:13:16-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:13:16-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60723"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:13:21-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:13:21-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:13:21-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:13:21-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:13:21-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:13:21-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:13:21-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:13:21-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:13:21-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:13:21-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:13:21-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:13:21-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:13:21-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:13:21-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:13:21-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:13:21-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60734"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:13:21-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:13:21-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:13:21-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:13:21-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:13:22-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:13:22-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:13:22-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:13:22-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:13:22-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:13:22-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:13:22-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:13:22-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:13:22-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:13:22-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:13:22-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:13:22-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60750"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:13:26-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:13:26-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:13:26-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:13:26-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:13:27-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:13:27-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:13:27-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:13:27-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:13:27-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:13:27-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:13:27-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:13:27-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:13:27-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:13:27-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:13:27-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:13:27-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60763"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:13:32-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:13:32-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:13:32-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:13:32-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:13:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:13:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:13:32-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:13:32-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:13:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:13:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:13:32-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:13:32-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:13:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:13:32-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:13:32-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:13:32-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60779"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:13:34-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:13:34-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:13:34-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:13:34-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:13:34-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:13:34-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:13:34-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:13:34-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:13:34-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:13:34-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:13:34-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:13:34-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:13:34-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:13:34-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:13:34-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:13:34-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60793"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:13:37-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:13:37-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:13:37-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:13:37-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:13:37-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:13:37-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:13:37-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:13:37-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:13:37-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:13:37-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:13:37-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:13:37-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:13:37-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:13:37-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:13:37-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:13:37-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60817"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:13:43-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:13:43-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:13:43-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:13:43-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:13:43-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:13:43-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:13:43-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:13:43-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:13:43-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:13:43-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:13:43-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:13:43-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:13:43-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:13:43-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:13:43-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:13:43-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60845"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:13:48-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:13:48-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:13:48-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:13:48-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:13:48-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:13:48-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:13:48-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:13:48-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:13:48-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:13:48-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:13:48-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:13:48-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:13:48-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:13:48-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:13:48-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:13:48-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60860"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:13:55-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:13:55-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:13:55-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:13:55-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:13:55-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:13:55-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:13:55-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:13:55-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:13:55-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:13:55-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:13:55-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:13:55-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:13:55-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:13:55-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:13:55-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:13:55-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60873"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:14:00-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:14:00-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:14:00-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:14:00-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:14:00-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:14:00-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:14:00-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:14:00-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:14:00-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:14:00-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:14:00-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:14:00-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:14:00-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:14:00-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:14:00-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:14:00-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60898"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:14:06-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:14:06-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:14:06-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:14:06-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:14:06-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:14:06-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:14:06-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:14:06-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:14:06-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:14:06-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:14:06-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:14:06-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:14:06-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:14:06-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:14:06-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:14:06-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60916"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:14:11-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:14:11-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:14:11-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:14:11-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:14:11-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:14:11-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:14:11-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:14:11-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:14:11-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:14:11-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:14:11-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:14:11-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:14:11-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:14:11-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:14:11-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:14:11-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60942"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:14:16-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:14:16-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:14:16-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:14:16-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:14:16-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:14:16-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:14:16-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:14:16-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:14:16-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:14:16-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:14:16-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:14:16-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:14:17-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:14:17-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:14:17-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:14:17-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60955"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:14:22-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:14:22-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:14:22-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:14:22-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:14:22-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:14:22-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:14:22-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:14:22-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:14:22-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:14:22-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:14:22-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:14:22-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:14:22-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:14:22-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:14:22-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:14:22-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60971"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:14:27-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:14:27-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:14:27-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:14:27-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:14:27-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:14:27-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:14:27-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:14:27-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:14:27-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:14:27-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:14:27-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:14:27-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:14:27-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:14:27-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:14:27-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:14:27-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60985"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:14:33-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:14:33-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:14:33-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:14:33-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:14:33-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:14:33-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:14:33-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:14:33-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:14:33-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:14:33-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:14:33-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:14:33-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:14:33-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:14:33-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:14:33-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:14:33-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:60999"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:14:38-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:14:38-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:14:38-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:14:38-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:14:38-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:14:38-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:14:38-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:14:38-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:14:38-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:14:38-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:14:38-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:14:38-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:14:38-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:14:38-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:14:38-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:14:38-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61020"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:14:44-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:14:44-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:14:44-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:14:44-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:14:44-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:14:44-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:14:44-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:14:44-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:14:44-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:14:44-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:14:44-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:14:44-07:00" level=warning msg="error running query" connectTime="2026-03-17 15:14:44.157935 -0700 PDT m=+0.198006085" connectionDb=hackathon connectionID=4 error="nothing to commit" queryTime="2026-03-17 15:14:44.167837 -0700 PDT m=+0.207907543"
+time="2026-03-17T15:14:44-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:14:44-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:14:44-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=6
+time="2026-03-17T15:14:44-07:00" level=info msg=ConnectionClosed connectionID=6
+time="2026-03-17T15:14:44-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:14:44-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=7
+time="2026-03-17T15:14:44-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:14:44-07:00" level=info msg=ConnectionClosed connectionID=7
+time="2026-03-17T15:14:44-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61042"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:14:49-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:14:49-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:14:49-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:14:49-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:14:49-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:14:49-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:14:49-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:14:49-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:14:49-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:14:49-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:14:49-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:14:49-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:14:50-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:14:50-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:14:50-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:14:50-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61061"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:14:55-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:14:55-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:14:55-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:14:55-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:14:55-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:14:55-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:14:55-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:14:55-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:14:55-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:14:55-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:14:55-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:14:55-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:14:55-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:14:55-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:14:55-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:14:55-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61074"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:15:00-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:15:00-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:15:00-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:15:00-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:15:00-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:15:00-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:15:00-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:15:00-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:15:00-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:15:00-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:15:00-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:15:00-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:15:00-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:15:00-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:15:00-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:15:00-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61088"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:15:06-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:15:06-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:15:06-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:15:06-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:15:06-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:15:06-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:15:06-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:15:06-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:15:06-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:15:06-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:15:06-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:15:06-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:15:06-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:15:06-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:15:06-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:15:06-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61101"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:15:11-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:15:11-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:15:11-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:15:11-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:15:11-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:15:11-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:15:11-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:15:11-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:15:11-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:15:11-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:15:11-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:15:11-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:15:11-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:15:11-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:15:11-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:15:11-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61114"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:15:12-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:15:12-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:15:12-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:15:12-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:15:12-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:15:12-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:15:12-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:15:12-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:15:12-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:15:12-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:15:12-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:15:12-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:15:12-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:15:12-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:15:12-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:15:12-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61139"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:15:16-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:15:16-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:15:16-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:15:16-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:15:17-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:15:17-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:15:17-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:15:17-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:15:17-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:15:17-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:15:17-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:15:17-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:15:17-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:15:17-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:15:17-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:15:17-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61154"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:15:18-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:15:18-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:15:18-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:15:18-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:15:18-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:15:18-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:15:18-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:15:18-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:15:18-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:15:18-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:15:18-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:15:18-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:15:18-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:15:18-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:15:18-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:15:18-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61175"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:15:22-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:15:22-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:15:22-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:15:22-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:15:22-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:15:22-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:15:22-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:15:22-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:15:22-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:15:22-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:15:22-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:15:22-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:15:22-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:15:22-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:15:22-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:15:22-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61189"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:15:27-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:15:27-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:15:27-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:15:27-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:15:27-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:15:27-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:15:27-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:15:27-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:15:27-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:15:27-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:15:27-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:15:27-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:15:27-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:15:27-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:15:27-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:15:27-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61201"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:15:29-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:15:29-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:15:29-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:15:29-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:15:29-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:15:29-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:15:29-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:15:29-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:15:29-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:15:29-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:15:29-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:15:29-07:00" level=warning msg="error running query" connectTime="2026-03-17 15:15:29.697305 -0700 PDT m=+0.198308042" connectionDb=hackathon connectionID=4 error="nothing to commit" queryTime="2026-03-17 15:15:29.707163 -0700 PDT m=+0.208165751"
+time="2026-03-17T15:15:29-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:15:29-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:15:29-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=6
+time="2026-03-17T15:15:29-07:00" level=info msg=ConnectionClosed connectionID=6
+time="2026-03-17T15:15:30-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:15:30-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=7
+time="2026-03-17T15:15:30-07:00" level=info msg=ConnectionClosed connectionID=7
+time="2026-03-17T15:15:30-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:15:30-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61222"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:15:33-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:15:33-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:15:33-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:15:33-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:15:33-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:15:33-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:15:33-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:15:33-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:15:33-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:15:33-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:15:33-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:15:33-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:15:33-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:15:33-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:15:33-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:15:33-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61238"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:15:35-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:15:35-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:15:35-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:15:35-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:15:35-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:15:35-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:15:35-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:15:35-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:15:35-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:15:35-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:15:35-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:15:35-07:00" level=warning msg="error running query" connectTime="2026-03-17 15:15:35.502118 -0700 PDT m=+0.198257459" connectionDb=hackathon connectionID=4 error="nothing to commit" queryTime="2026-03-17 15:15:35.510882 -0700 PDT m=+0.207021667"
+time="2026-03-17T15:15:35-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:15:35-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:15:35-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=6
+time="2026-03-17T15:15:35-07:00" level=info msg=ConnectionClosed connectionID=6
+time="2026-03-17T15:15:35-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:15:35-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=7
+time="2026-03-17T15:15:35-07:00" level=info msg=ConnectionClosed connectionID=7
+time="2026-03-17T15:15:35-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:15:35-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61275"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:15:38-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:15:38-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:15:38-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:15:38-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:15:38-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:15:38-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:15:38-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:15:38-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:15:38-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:15:38-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:15:38-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:15:38-07:00" level=warning msg="error running query" connectTime="2026-03-17 15:15:38.772224 -0700 PDT m=+0.198647876" connectionDb=hackathon connectionID=4 error="nothing to commit" queryTime="2026-03-17 15:15:38.781826 -0700 PDT m=+0.208248960"
+time="2026-03-17T15:15:38-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:15:38-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:15:39-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=6
+time="2026-03-17T15:15:39-07:00" level=info msg=ConnectionClosed connectionID=6
+time="2026-03-17T15:15:39-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:15:39-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=7
+time="2026-03-17T15:15:39-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:15:39-07:00" level=info msg=ConnectionClosed connectionID=7
+time="2026-03-17T15:15:39-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61316"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:15:41-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:15:41-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:15:41-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:15:41-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:15:41-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:15:41-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:15:41-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:15:41-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:15:41-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:15:41-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:15:41-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:15:41-07:00" level=warning msg="error running query" connectTime="2026-03-17 15:15:41.341741 -0700 PDT m=+0.198483709" connectionDb=hackathon connectionID=4 error="nothing to commit" queryTime="2026-03-17 15:15:41.350794 -0700 PDT m=+0.207536751"
+time="2026-03-17T15:15:41-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:15:41-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:15:41-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=6
+time="2026-03-17T15:15:41-07:00" level=info msg=ConnectionClosed connectionID=6
+time="2026-03-17T15:15:41-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:15:41-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=7
+time="2026-03-17T15:15:41-07:00" level=info msg=ConnectionClosed connectionID=7
+time="2026-03-17T15:15:41-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:15:41-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61340"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:15:44-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:15:44-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:15:44-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:15:44-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:15:44-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:15:44-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:15:44-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:15:44-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:15:44-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:15:44-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:15:44-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:15:44-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:15:44-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:15:44-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:15:44-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:15:44-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61368"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:15:57-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:15:57-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:15:57-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:15:57-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:15:57-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:15:57-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:15:57-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:15:57-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:15:57-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:15:57-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:15:57-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:15:57-07:00" level=warning msg="error running query" connectTime="2026-03-17 15:15:57.652375 -0700 PDT m=+0.197186668" connectionDb=hackathon connectionID=4 error="nothing to commit" queryTime="2026-03-17 15:15:57.661665 -0700 PDT m=+0.206477168"
+time="2026-03-17T15:15:57-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:15:57-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:15:57-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=6
+time="2026-03-17T15:15:57-07:00" level=info msg=ConnectionClosed connectionID=6
+time="2026-03-17T15:15:58-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:15:58-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=7
+time="2026-03-17T15:15:58-07:00" level=info msg=ConnectionClosed connectionID=7
+time="2026-03-17T15:15:58-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:15:58-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61391"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:16:03-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:16:03-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:16:03-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:16:03-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:16:03-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:16:03-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:16:03-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:16:03-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:16:03-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:16:03-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:16:03-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:16:03-07:00" level=warning msg="error running query" connectTime="2026-03-17 15:16:03.491855 -0700 PDT m=+0.197895168" connectionDb=hackathon connectionID=4 error="nothing to commit" queryTime="2026-03-17 15:16:03.501547 -0700 PDT m=+0.207586626"
+time="2026-03-17T15:16:03-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:16:03-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:16:03-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=6
+time="2026-03-17T15:16:03-07:00" level=info msg=ConnectionClosed connectionID=6
+time="2026-03-17T15:16:03-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:16:03-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=7
+time="2026-03-17T15:16:03-07:00" level=info msg=ConnectionClosed connectionID=7
+time="2026-03-17T15:16:03-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:16:03-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61413"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:16:09-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:16:09-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:16:09-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:16:09-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:16:09-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:16:09-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:16:09-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:16:09-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:16:09-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:16:09-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:16:09-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:16:09-07:00" level=warning msg="error running query" connectTime="2026-03-17 15:16:09.37093 -0700 PDT m=+0.197535334" connectionDb=hackathon connectionID=4 error="nothing to commit" queryTime="2026-03-17 15:16:09.380674 -0700 PDT m=+0.207279042"
+time="2026-03-17T15:16:09-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:16:09-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:16:09-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=6
+time="2026-03-17T15:16:09-07:00" level=info msg=ConnectionClosed connectionID=6
+time="2026-03-17T15:16:09-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:16:09-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=7
+time="2026-03-17T15:16:09-07:00" level=info msg=ConnectionClosed connectionID=7
+time="2026-03-17T15:16:09-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:16:09-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61469"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:16:32-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:16:32-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:16:32-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:16:32-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:16:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:16:32-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:16:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:16:32-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:16:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:16:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:16:32-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:16:32-07:00" level=warning msg="error running query" connectTime="2026-03-17 15:16:32.636903 -0700 PDT m=+0.198385334" connectionDb=hackathon connectionID=4 error="nothing to commit" queryTime="2026-03-17 15:16:32.645642 -0700 PDT m=+0.207124334"
+time="2026-03-17T15:16:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:16:32-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:16:32-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=6
+time="2026-03-17T15:16:32-07:00" level=info msg=ConnectionClosed connectionID=6
+time="2026-03-17T15:16:33-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:16:33-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=7
+time="2026-03-17T15:16:33-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:16:33-07:00" level=info msg=ConnectionClosed connectionID=7
+time="2026-03-17T15:16:33-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61498"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:16:38-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:16:38-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:16:38-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:16:38-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:16:38-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:16:38-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:16:38-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:16:38-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:16:38-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:16:38-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:16:38-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:16:38-07:00" level=warning msg="error running query" connectTime="2026-03-17 15:16:38.451327 -0700 PDT m=+0.197891668" connectionDb=hackathon connectionID=4 error="nothing to commit" queryTime="2026-03-17 15:16:38.459203 -0700 PDT m=+0.205767501"
+time="2026-03-17T15:16:38-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:16:38-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:16:38-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=6
+time="2026-03-17T15:16:38-07:00" level=info msg=ConnectionClosed connectionID=6
+time="2026-03-17T15:16:38-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:16:38-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=7
+time="2026-03-17T15:16:38-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:16:38-07:00" level=info msg=ConnectionClosed connectionID=7
+time="2026-03-17T15:16:38-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61525"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:16:44-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:16:44-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:16:44-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:16:44-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:16:44-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:16:44-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:16:44-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:16:44-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:16:44-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:16:44-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:16:44-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:16:44-07:00" level=warning msg="error running query" connectTime="2026-03-17 15:16:44.302788 -0700 PDT m=+0.199037085" connectionDb=hackathon connectionID=4 error="nothing to commit" queryTime="2026-03-17 15:16:44.312259 -0700 PDT m=+0.208508460"
+time="2026-03-17T15:16:44-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:16:44-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:16:44-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=6
+time="2026-03-17T15:16:44-07:00" level=info msg=ConnectionClosed connectionID=6
+time="2026-03-17T15:16:44-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:16:44-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=7
+time="2026-03-17T15:16:44-07:00" level=info msg=ConnectionClosed connectionID=7
+time="2026-03-17T15:16:44-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:16:44-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61544"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:16:46-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:16:46-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:16:46-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:16:46-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:16:46-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:16:46-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:16:46-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:16:46-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:16:46-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:16:46-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:16:46-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:16:46-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:16:46-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:16:46-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:16:46-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:16:46-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61557"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:16:50-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:16:50-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:16:50-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:16:50-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:16:50-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:16:50-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:16:50-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:16:50-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:16:50-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:16:50-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:16:50-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:16:50-07:00" level=warning msg="error running query" connectTime="2026-03-17 15:16:50.154406 -0700 PDT m=+0.198658042" connectionDb=hackathon connectionID=4 error="nothing to commit" queryTime="2026-03-17 15:16:50.163944 -0700 PDT m=+0.208196001"
+time="2026-03-17T15:16:50-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:16:50-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:16:50-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=6
+time="2026-03-17T15:16:50-07:00" level=info msg=ConnectionClosed connectionID=6
+time="2026-03-17T15:16:50-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:16:50-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=7
+time="2026-03-17T15:16:50-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:16:50-07:00" level=info msg=ConnectionClosed connectionID=7
+time="2026-03-17T15:16:50-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61579"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:16:55-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:16:55-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:16:55-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:16:55-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:16:56-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:16:56-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:16:56-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:16:56-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:16:56-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:16:56-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:16:56-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:16:56-07:00" level=warning msg="error running query" connectTime="2026-03-17 15:16:56.008875 -0700 PDT m=+0.199757709" connectionDb=hackathon connectionID=4 error="nothing to commit" queryTime="2026-03-17 15:16:56.019856 -0700 PDT m=+0.210738209"
+time="2026-03-17T15:16:56-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:16:56-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:16:56-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=6
+time="2026-03-17T15:16:56-07:00" level=info msg=ConnectionClosed connectionID=6
+time="2026-03-17T15:16:56-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:16:56-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=7
+time="2026-03-17T15:16:56-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:16:56-07:00" level=info msg=ConnectionClosed connectionID=7
+time="2026-03-17T15:16:56-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61605"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:17:05-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:17:05-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:17:05-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:17:05-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:17:06-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:17:06-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:17:06-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:17:06-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:17:06-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:17:06-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:17:06-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:17:06-07:00" level=info msg=ConnectionClosed connectionID=4
+time="2026-03-17T15:17:06-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:17:06-07:00" level=info msg="Server closing listener. No longer accepting connections."
+time="2026-03-17T15:17:06-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:17:06-07:00" level=info msg="stats stopped: context canceled"
+Starting server with Config HP="127.0.0.1:61623"|T="28800000"|R="false"|L="info"
+time="2026-03-17T15:17:11-07:00" level=info msg="Server ready. Accepting connections."
+time="2026-03-17T15:17:11-07:00" level=warning msg="secure_file_priv is set to \"\", which is insecure."
+time="2026-03-17T15:17:11-07:00" level=warning msg="Any user with GRANT FILE privileges will be able to read any file which the sql-server process can read."
+time="2026-03-17T15:17:11-07:00" level=warning msg="Please consider restarting the server with secure_file_priv set to a safe (or non-existent) directory."
+time="2026-03-17T15:17:11-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=1
+time="2026-03-17T15:17:11-07:00" level=info msg=ConnectionClosed connectionID=1
+time="2026-03-17T15:17:11-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=2
+time="2026-03-17T15:17:11-07:00" level=info msg=ConnectionClosed connectionID=2
+time="2026-03-17T15:17:11-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=3
+time="2026-03-17T15:17:11-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=4
+time="2026-03-17T15:17:11-07:00" level=info msg=ConnectionClosed connectionID=3
+time="2026-03-17T15:17:11-07:00" level=warning msg="error running query" connectTime="2026-03-17 15:17:11.596673 -0700 PDT m=+0.198656084" connectionDb=hackathon connectionID=4 error="nothing to commit" queryTime="2026-03-17 15:17:11.606416 -0700 PDT m=+0.208399792"
+time="2026-03-17T15:17:11-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=5
+time="2026-03-17T15:17:11-07:00" level=info msg=ConnectionClosed connectionID=5
+time="2026-03-17T15:17:11-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=6
+time="2026-03-17T15:17:11-07:00" level=info msg=ConnectionClosed connectionID=6
+time="2026-03-17T15:17:12-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=7
+time="2026-03-17T15:17:12-07:00" level=info msg=ConnectionClosed connectionID=7
+time="2026-03-17T15:17:12-07:00" level=info msg=NewConnection DisableClientMultiStatements=false connectionID=8
+time="2026-03-17T15:17:12-07:00" level=warning msg="error running query" connectTime="2026-03-17 15:17:12.082432 -0700 PDT m=+0.684416334" connectionDb=hackathon connectionID=8 error="fatal: remote 'origin' not found.\nPlease make sure the remote exists." queryTime="2026-03-17 15:17:12.083113 -0700 PDT m=+0.685097209"
+time="2026-03-17T15:17:12-07:00" level=info msg=ConnectionClosed connectionID=8
+time="2026-03-17T15:17:12-07:00" level=info msg=ConnectionClosed connectionID=4

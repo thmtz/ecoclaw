@@ -1,6 +1,6 @@
 # Energy Proxy — Sub-Design
 
-Part of [EcoClaw design](design.md).
+Part of [EcoClaw design](index.md).
 
 ## Purpose
 
@@ -14,7 +14,7 @@ OpenClaw has no hook to post-process outgoing response text. `message:sent` fire
 - **Proxy layer** — intercept and modify the stream before it reaches OpenClaw
 - **LLM instruction** (AGENTS.md) — probabilistic, LLM can forget or truncate
 
-The proxy is the only deterministic option. See [reference/openclaw.md](reference/openclaw.md).
+The proxy is the only deterministic option. See [../reference/openclaw.md](../reference/openclaw.md).
 
 ## Placement
 
@@ -41,7 +41,7 @@ delta_mwh = delta_mj / 3600
 tok_per_j = total_tokens / (delta_mj / 1000)
 ```
 
-No polling or averaging needed — the hardware counter integrates automatically. See [reference/gb10-validated.md](reference/gb10-validated.md).
+No polling or averaging needed — the hardware counter integrates automatically. See [reference/gb10-validated.md](../reference/gb10-validated.md).
 
 ## Receipt format (appended to stream)
 

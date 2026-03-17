@@ -1,6 +1,6 @@
 # Carbon Router — Sub-Design
 
-Part of [EcoClaw design](design.md).
+Part of [EcoClaw design](index.md).
 
 ## Purpose
 
@@ -19,7 +19,7 @@ Returns `carbonIntensity` in gCO₂eq/kWh. Updates hourly. Free tier returns san
 
 API key: `~/.config/electricity_maps/api_key`
 
-See [reference/electricity-maps.md](reference/electricity-maps.md). Mock fallback if API unavailable: use `fallback_carbon` from config (default 250 gCO₂/kWh).
+See [../reference/electricity-maps.md](../reference/electricity-maps.md). Mock fallback if API unavailable: use `fallback_carbon` from config (default 250 gCO₂/kWh).
 
 ## Config file
 

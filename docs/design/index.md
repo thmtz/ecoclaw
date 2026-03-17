@@ -39,7 +39,7 @@ Carbon Router  ◄──── Electricity Maps API (US-CAL-CISO)
 ### OpenClaw
 Personal AI assistant gateway (Node.js, MIT). Provides the WebChat UI and connects to vLLM via its native vLLM provider. An **energy skill** teaches the agent to include the energy receipt in every response. Configuration via `~/.openclaw/openclaw.json`.
 
-See: [reference/vllm.md](reference/vllm.md) for provider setup.
+See: [../reference/vllm.md](../reference/vllm.md) for provider setup.
 
 ### vLLM
 Serves one Nemotron model at a time on `:8000`. OpenAI-compatible API. Model switches require a restart (~2-5 min with warm cache). This is acceptable for hackathon — carbon routing is coarse-grained (switches happen at threshold crossings, not per-request).
@@ -54,20 +54,20 @@ Both are MoE hybrid Mamba-Transformer. Cannot run simultaneously.
 
 **Quantization: NVFP4 + MARLIN backend (confirmed working).** CUTLASS-based NVFP4 kernels fail on sm_121 (PyTorch 2.10 caps at sm_120). Workaround: `VLLM_USE_FLASHINFER_MOE_FP4=0 VLLM_NVFP4_GEMM_BACKEND=marlin`. MARLIN is a software fallback that runs on any SM — slower than native hardware kernels but produces correct output. FP8 being evaluated as a potential faster alternative.
 
-See: [reference/vllm.md](reference/vllm.md).
+See: [../reference/vllm.md](../reference/vllm.md).
 
 ### Energy proxy
 Thin Python middleware between OpenClaw and vLLM. Snapshots `nvmlDeviceGetTotalEnergyConsumption` before and after each inference call. The delta is the exact energy consumed — no polling or averaging needed. Injects energy metadata (mJ, mWh, tok/J) into the response so the OpenClaw skill can surface it.
 
-See [design-energy-proxy.md](design-energy-proxy.md).
+See [energy-proxy.md](energy-proxy.md).
 
 ### Carbon router
 Polls Electricity Maps API (`GET /v3/carbon-intensity/latest?zone=US-CAL-CISO`) on a slow interval (e.g. every 10 min). Compares current carbon intensity against thresholds defined in a config file. When a threshold is crossed, triggers a model switch (restart vLLM with the appropriate model). Also surfaces current carbon + active mode in the OpenClaw UI via the energy skill.
 
-Config is a simple YAML file: when `carbonIntensity > X`, use model Y. Hysteresis band prevents flapping. See [design-carbon-router.md](design-carbon-router.md) and [reference/electricity-maps.md](reference/electricity-maps.md). Fallback to mock data if no internet.
+Config is a simple YAML file: when `carbonIntensity > X`, use model Y. Hysteresis band prevents flapping. See [carbon-router.md](carbon-router.md) and [../reference/electricity-maps.md](../reference/electricity-maps.md). Fallback to mock data if no internet.
 
 ### NVML
-`nvmlDeviceGetTotalEnergyConsumption` returns a hardware-integrated mJ counter. Diff before/after = exact energy for that request. Confirmed working on GB10. Power limit and memory reporting not available. See: [reference/gb10-validated.md](reference/gb10-validated.md).
+`nvmlDeviceGetTotalEnergyConsumption` returns a hardware-integrated mJ counter. Diff before/after = exact energy for that request. Confirmed working on GB10. Power limit and memory reporting not available. See: [../reference/gb10-validated.md](../reference/gb10-validated.md).
 
 ### GPU clock control (optional)
 `sudo nvidia-smi -lgc <min>,<max>` can cap SM frequency (range 300–3003 MHz). Validated on device. This gives a second energy lever beyond model selection — the carbon router could also apply a clock cap in green mode. TBD whether we include this in MVP.

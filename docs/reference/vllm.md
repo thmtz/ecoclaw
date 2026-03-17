@@ -60,7 +60,9 @@ Disables BOTH torch.inductor AND CUDA graphs (`-cc.mode=NONE -cc.cudagraph_mode=
 | `VLLM_CUTLASS` | `RuntimeError: Error Internal` at engine init |
 | `MARLIN` | **Works** — produces real output, correct inference |
 
-**Root cause:** PyTorch 2.10 supports CUDA capability up to sm_120; GB10 is sm_121. CUTLASS GEMM kernels for NVFP4 fail to initialize. NaN logits cause sampler to pick tokens that decode to empty strings.
+**Root cause:** PyTorch 2.10 supports CUDA capability up to sm_120; GB10 is sm_121. CUTLASS GEMM kernels for NVFP4 are compiled for SM targets up to sm_120, so they fail to initialize on sm_121. NaN logits cause sampler to pick tokens that decode to empty strings.
+
+**Is this fixable?** Yes — it's a PyTorch version issue, not a fundamental kernel gap. A PyTorch build with sm_121 support would enable native NVFP4 CUTLASS kernels and eliminate the need for MARLIN. Post-hackathon fix: upgrade PyTorch to a version that includes sm_121 in its CUTLASS compilation targets.
 
 **Diagnosis markers:**
 - `ValueError: Out of range float values are not JSON compliant: nan` in server logs when requesting logprobs

@@ -21,8 +21,10 @@ The instance was set up with `gpuctl prepare gb10-hackathon -m Qwen/Qwen2.5-0.5B
 ## Details
 
 - [README](README.md) — hackathon context, our angle, hardware specs
-- [Brainstorm](docs/brainstorm.md) — capabilities, ideas, open questions
-- [Design](docs/design.md) — HLD, components, demo flow
+- [Brainstorm](docs/reference/brainstorm.md) — capabilities, ideas, open questions
+- [Design](docs/design/index.md) — HLD, components, demo flow
+  - [Energy proxy](docs/design/energy-proxy.md)
+  - [Carbon router](docs/design/carbon-router.md)
 
 ### Reference docs (validated findings, not design)
 

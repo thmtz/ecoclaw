@@ -5,9 +5,11 @@ into every response (streaming and non-streaming).
 """
 import json
 import logging
+import threading
 import httpx
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import StreamingResponse
+from pathlib import Path
 
 from . import state as st
 from .nvml import measure, energy_mj
@@ -16,8 +18,31 @@ log = logging.getLogger(__name__)
 
 VLLM_BASE = "http://localhost:8000"
 PROXY_PORT = 8001
+MOCK_FILE = Path.home() / ".ecoclaw" / "mock_carbon"
+
+# Set by main.py so /demo/poll can signal the carbon router thread
+demo_poll_event: threading.Event | None = None
 
 app = FastAPI(title="EcoClaw Energy Proxy")
+
+
+@app.post("/demo/carbon/{value}")
+async def demo_set_carbon(value: float):
+    """Write a mock carbon value to ~/.ecoclaw/mock_carbon for demo control."""
+    MOCK_FILE.parent.mkdir(parents=True, exist_ok=True)
+    MOCK_FILE.write_text(str(value))
+    st.update(carbon_gco2=value)
+    log.info("Demo: set mock carbon to %s gCO2/kWh", value)
+    return {"mock_carbon": value}
+
+
+@app.post("/demo/poll")
+async def demo_poll():
+    """Trigger an immediate carbon router poll (don't wait for the timer)."""
+    if demo_poll_event is not None:
+        demo_poll_event.set()
+        return {"status": "poll triggered"}
+    return {"status": "no poll event registered"}
 
 
 def _fmt_energy(mj: float) -> str:

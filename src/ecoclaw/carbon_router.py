@@ -1,8 +1,10 @@
 """Carbon router — polls Electricity Maps and switches models based on carbon intensity."""
+import asyncio
 import json
 import logging
 import os
 import subprocess
+import threading
 import time
 from pathlib import Path
 
@@ -14,6 +16,7 @@ log = logging.getLogger(__name__)
 
 CONFIG_FILE = Path.home() / ".ecoclaw" / "carbon-router.yaml"
 API_KEY_FILE = Path.home() / ".config" / "electricity_maps" / "api_key"
+MOCK_FILE = Path.home() / ".ecoclaw" / "mock_carbon"
 ZONE = "US-CAL-CISO"
 
 DEFAULT_CONFIG = {
@@ -21,7 +24,7 @@ DEFAULT_CONFIG = {
         {"carbon_gt": 300, "model": "nano", "label": "green mode"},
         {"carbon_lte": 300, "model": "super", "label": "performance mode"},
     ],
-    "poll_interval_seconds": 86400,
+    "poll_interval_seconds": 10,
     "fallback_carbon": 250,
     "hysteresis": 20,
 }
@@ -47,6 +50,8 @@ MODELS = {
 
 VLLM_SCREEN = "vllm"
 
+_current_model_key: str = "nano"
+
 
 def load_config() -> dict:
     try:
@@ -65,6 +70,13 @@ def load_api_key() -> str:
 
 
 def fetch_carbon(api_key: str, fallback: float) -> float:
+    if MOCK_FILE.exists():
+        try:
+            val = float(MOCK_FILE.read_text().strip())
+            log.info("Using mock carbon: %s gCO2/kWh", val)
+            return val
+        except Exception:
+            pass
     if not api_key:
         log.warning("No Electricity Maps API key — using fallback carbon %s", fallback)
         return fallback
@@ -104,15 +116,31 @@ def select_model(carbon: float, config: dict, current_model: str) -> tuple[str, 
     return None, None
 
 
+def _notify_openclaw(message: str, token: str = "439368c7ef3a54d50317db8d985c5b2829ab2e494ec24e26"):
+    async def _send():
+        try:
+            import websockets
+            async with websockets.connect("ws://localhost:18789") as ws:
+                await ws.send(json.dumps({"type": "req", "id": "notify-1", "method": "connect", "params": {"token": token}}))
+                await ws.recv()
+                await ws.send(json.dumps({"type": "req", "id": "notify-2", "method": "chat.inject", "params": {"sessionKey": "main", "message": message, "label": "EcoClaw"}}))
+                await ws.recv()
+        except Exception as e:
+            log.warning("chat.inject failed: %s", e)
+    try:
+        asyncio.run(_send())
+    except Exception as e:
+        log.warning("notify_openclaw error: %s", e)
+
+
 def switch_model(model_key: str, label: str):
     """Stop vLLM and restart with the new model."""
     model = MODELS[model_key]
     log.info("Switching to %s (%s)", model["short"], label)
 
-    # TODO: notify OpenClaw chat session (via gateway API or proxy injection)
-    # For now, log only — proxy will reflect new state on next request
-    log.info("Notification: Switching to %s — %s gCO2/kWh on grid. Back in ~2 min.",
-             model["short"], st.get().carbon_gco2)
+    _notify_openclaw(
+        f"⚠️ Grid carbon: {st.get().carbon_gco2:.0f} gCO₂/kWh — switching to {model['short']} ({label}). Back in ~2 min."
+    )
 
     # Stop current vLLM
     subprocess.run(["screen", "-S", VLLM_SCREEN, "-X", "quit"], capture_output=True)
@@ -158,11 +186,26 @@ def _wait_for_vllm(timeout: int = 300, poll: int = 5):
     log.error("vLLM did not become ready within %ds", timeout)
 
 
-def run(initial_model_key: str = "nano"):
+def _demo_poll():
+    """One-shot poll used by the /demo/poll endpoint."""
+    global _current_model_key
+    config = load_config()
+    api_key = load_api_key()
+    carbon = fetch_carbon(api_key, config.get("fallback_carbon", 250))
+    st.update(carbon_gco2=carbon)
+    new_key, label = select_model(carbon, config, _current_model_key)
+    if new_key and new_key != _current_model_key:
+        switch_model(new_key, label)
+        _current_model_key = new_key
+
+
+def run(initial_model_key: str = "nano", poll_event: threading.Event | None = None):
     """Main carbon router loop. Runs forever."""
+    global _current_model_key
     config = load_config()
     api_key = load_api_key()
     current_model_key = initial_model_key
+    _current_model_key = initial_model_key
 
     log.info("Carbon router started — initial model: %s (no switch on first poll)", current_model_key)
     st.update(
@@ -191,5 +234,11 @@ def run(initial_model_key: str = "nano"):
             if new_model_key and new_model_key != current_model_key:
                 switch_model(new_model_key, label)
                 current_model_key = new_model_key
+                _current_model_key = new_model_key
 
-        time.sleep(config.get("poll_interval_seconds", 600))
+        interval = config.get("poll_interval_seconds", 600)
+        if poll_event is not None:
+            poll_event.wait(timeout=interval)
+            poll_event.clear()
+        else:
+            time.sleep(interval)

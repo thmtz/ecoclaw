@@ -235,6 +235,7 @@ def run(initial_model_key: str = "nano", poll_event: threading.Event | None = No
         if first_poll:
             # On startup, accept whatever model is currently running. Only log what
             # we would do — don't kill a running vLLM instance on first check.
+            st.update(mode=_current_label(carbon, config, current_model_key))
             new_model_key, label = select_model(carbon, config, current_model_key)
             if new_model_key and new_model_key != current_model_key:
                 log.info(

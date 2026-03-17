@@ -133,6 +133,9 @@ Run the same prompt through Nano and Super (sequentially), show both responses w
 **NemoClaw integration**
 Install NemoClaw on top of OpenClaw for enterprise-grade sandboxing and security. Targets the "Best Use of OpenClaw" bonus prize angle, makes the demo look more polished.
 
+**Containerization**
+Package the EcoClaw Python service (proxy + carbon router) as a Docker container with a `docker-compose.yml` for one-command deployment. vLLM and OpenClaw have their own packaging; this is just the EcoClaw layer. Makes the project easy to deploy on any GB10, and strengthens the open-source story for the hackathon submission.
+
 ---
 
 ## Open questions

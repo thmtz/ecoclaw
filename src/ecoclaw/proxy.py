@@ -62,8 +62,16 @@ async def proxy(request: Request, path: str):
     # tool_choice="auto" requires --enable-auto-tool-choice and --tool-call-parser flags
     _VLLM_UNSUPPORTED = {"store", "metadata", "reasoning_effort", "tool_choice", "tools"}
     stripped = {f for f in _VLLM_UNSUPPORTED if req_json.pop(f, None) is not None}
+    log.debug("Request keys from client: %s", sorted(req_json.keys()))
     if stripped:
         log.info("Stripped unsupported vLLM fields: %s", stripped)
+
+    # Clamp token limits to vLLM's --max-model-len
+    MAX_TOKENS = 2048
+    for field in ("max_completion_tokens", "max_tokens"):
+        if req_json.get(field, 0) > MAX_TOKENS:
+            log.info("Clamping %s from %d to %d", field, req_json[field], MAX_TOKENS)
+            req_json[field] = MAX_TOKENS
 
     body = json.dumps(req_json).encode()
 

@@ -202,7 +202,15 @@ GB10 is CUDA compute capability **sm_121**. PyTorch 2.10+cu130 (what's installed
 - Affects BOTH normal mode and `--enforce-eager` — this is a kernel issue, not a graph capture issue
 - PyTorch prints on startup: `Maximum cuda capability supported by this version of PyTorch is (12.0)`
 
-**Practical impact:** NVFP4 quantized MoE models (Nemotron-3-Nano/Super NVFP4) do not work on this device with PyTorch 2.10+cu130. FP8 and BF16 quantized variants are being tested as alternatives — they use different kernels that may not hit this limitation.
+**Root cause (confirmed):** PyTorch 2.10+cu130 compiles CUTLASS kernels for CUDA SM targets up to sm_120. GB10 is sm_121 — just beyond the compiled target range. A PyTorch build with sm_121 support would likely fix NVFP4 natively, but not available today.
+
+**Workaround:** Use the MARLIN backend — a software fallback that works on any SM:
+```bash
+VLLM_USE_FLASHINFER_MOE_FP4=0 VLLM_NVFP4_GEMM_BACKEND=marlin vllm serve <model> ...
+```
+MARLIN produces correct output at some throughput cost vs native kernels. Confirmed working on Nemotron-3-Nano-30B NVFP4.
+
+**Future fix:** A PyTorch build with sm_121 support would recover native NVFP4 performance — worth revisiting post-hackathon.
 
 ## What's NOT available
 

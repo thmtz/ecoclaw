@@ -1,0 +1,180 @@
+"""Carbon router — polls Electricity Maps and switches models based on carbon intensity."""
+import json
+import logging
+import os
+import subprocess
+import time
+from pathlib import Path
+
+import httpx
+
+from . import state as st
+
+log = logging.getLogger(__name__)
+
+CONFIG_FILE = Path.home() / ".ecoclaw" / "carbon-router.yaml"
+API_KEY_FILE = Path.home() / ".config" / "electricity_maps" / "api_key"
+ZONE = "US-CAL-CISO"
+
+DEFAULT_CONFIG = {
+    "thresholds": [
+        {"carbon_gt": 300, "model": "nano", "label": "green mode"},
+        {"carbon_lte": 300, "model": "super", "label": "performance mode"},
+    ],
+    "poll_interval_seconds": 600,
+    "fallback_carbon": 250,
+    "hysteresis": 20,
+}
+
+MODELS = {
+    "nano": {
+        "id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-NVFP4",
+        "short": "Nemotron Nano 30B",
+        "gpu_mem_util": 0.9,
+        "max_model_len": 32768,
+    },
+    "super": {
+        "id": "nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4",
+        "short": "Nemotron Super 120B",
+        "gpu_mem_util": 0.5,
+        "max_model_len": 4096,
+    },
+}
+
+VLLM_ENV = "VLLM_USE_FLASHINFER_MOE_FP4=0 VLLM_NVFP4_GEMM_BACKEND=marlin"
+VLLM_SCREEN = "vllm"
+
+
+def load_config() -> dict:
+    try:
+        import yaml
+        if CONFIG_FILE.exists():
+            return yaml.safe_load(CONFIG_FILE.read_text())
+    except ImportError:
+        pass
+    return DEFAULT_CONFIG
+
+
+def load_api_key() -> str:
+    if API_KEY_FILE.exists():
+        return API_KEY_FILE.read_text().strip()
+    return os.environ.get("ELECTRICITY_MAPS_API_KEY", "")
+
+
+def fetch_carbon(api_key: str, fallback: float) -> float:
+    if not api_key:
+        log.warning("No Electricity Maps API key — using fallback carbon %s", fallback)
+        return fallback
+    try:
+        r = httpx.get(
+            f"https://api.electricitymaps.com/v3/carbon-intensity/latest?zone={ZONE}",
+            headers={"auth-token": api_key},
+            timeout=10,
+        )
+        r.raise_for_status()
+        value = r.json()["carbonIntensity"]
+        log.info("Carbon intensity: %s gCO2/kWh", value)
+        return float(value)
+    except Exception as e:
+        log.warning("Electricity Maps API error: %s — using fallback %s", e, fallback)
+        return fallback
+
+
+def select_model(carbon: float, config: dict, current_model: str) -> tuple[str, str]:
+    """Return (model_key, label) based on carbon intensity and thresholds."""
+    hysteresis = config.get("hysteresis", 20)
+    for threshold in config["thresholds"]:
+        if "carbon_gt" in threshold:
+            limit = threshold["carbon_gt"]
+            # Apply hysteresis: only switch TO green if carbon is clearly above threshold
+            if current_model != "nano" and carbon > limit + hysteresis:
+                return threshold["model"], threshold["label"]
+            if current_model == "nano" and carbon > limit - hysteresis:
+                return threshold["model"], threshold["label"]
+        elif "carbon_lte" in threshold:
+            limit = threshold["carbon_lte"]
+            if current_model != "super" and carbon <= limit - hysteresis:
+                return threshold["model"], threshold["label"]
+            if current_model == "super" and carbon <= limit + hysteresis:
+                return threshold["model"], threshold["label"]
+    # No change
+    return None, None
+
+
+def switch_model(model_key: str, label: str):
+    """Stop vLLM and restart with the new model."""
+    model = MODELS[model_key]
+    log.info("Switching to %s (%s)", model["short"], label)
+
+    # TODO: notify OpenClaw chat session (via gateway API or proxy injection)
+    # For now, log only — proxy will reflect new state on next request
+    log.info("Notification: Switching to %s — %s gCO2/kWh on grid. Back in ~2 min.",
+             model["short"], st.get().carbon_gco2)
+
+    # Stop current vLLM
+    subprocess.run(["screen", "-S", VLLM_SCREEN, "-X", "quit"], capture_output=True)
+    time.sleep(2)
+
+    # Start new vLLM
+    cmd = (
+        f"source ~/.profile && ml && "
+        f"{VLLM_ENV} "
+        f"vllm serve {model['id']} "
+        f"--trust-remote-code "
+        f"--reasoning-parser nano_v3 "
+        f"--max-model-len {model['max_model_len']} "
+        f"--gpu-memory-utilization {model['gpu_mem_util']} "
+        f"2>&1 | tee /tmp/vllm-{model_key}.log"
+    )
+    subprocess.Popen(["screen", "-dmS", VLLM_SCREEN, "bash", "-lc", cmd])
+    log.info("vLLM restarting with %s", model["short"])
+
+    # Wait for vLLM to be ready
+    _wait_for_vllm()
+
+    # Update shared state
+    st.update(
+        model=model["id"],
+        model_short=model["short"],
+        mode=label,
+    )
+    log.info("Switch complete: now serving %s", model["short"])
+
+
+def _wait_for_vllm(timeout: int = 300, poll: int = 5):
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        try:
+            r = httpx.get("http://localhost:8000/v1/models", timeout=2)
+            if r.status_code == 200:
+                log.info("vLLM is ready")
+                return
+        except Exception:
+            pass
+        time.sleep(poll)
+    log.error("vLLM did not become ready within %ds", timeout)
+
+
+def run(initial_model_key: str = "nano"):
+    """Main carbon router loop. Runs forever."""
+    config = load_config()
+    api_key = load_api_key()
+    current_model_key = initial_model_key
+
+    log.info("Carbon router started — initial model: %s", current_model_key)
+    st.update(
+        model=MODELS[current_model_key]["id"],
+        model_short=MODELS[current_model_key]["short"],
+        mode="startup",
+    )
+
+    while True:
+        carbon = fetch_carbon(api_key, config.get("fallback_carbon", 250))
+        st.update(carbon_gco2=carbon)
+
+        new_model_key, label = select_model(carbon, config, current_model_key)
+        if new_model_key and new_model_key != current_model_key:
+            switch_model(new_model_key, label)
+            current_model_key = new_model_key
+
+        time.sleep(config.get("poll_interval_seconds", 600))

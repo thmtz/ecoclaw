@@ -150,6 +150,24 @@ openclaw gateway --port 18789 --verbose
 # Web UI available at http://localhost:18789
 ```
 
+## Streaming architecture (important for energy proxy)
+
+OpenClaw does **not** transparently proxy SSE streams from the LLM provider. The pipeline:
+
+1. `streamSimple` (from `@mariozechner/pi-ai`) sends request to provider, receives `text_delta` events.
+2. Pi-embedded-runner emits internal `AgentEvent`s (`stream: "assistant"`, `data: { delta, text }`).
+3. Gateway's `openai-http.ts` subscribes to agent events and **reconstructs its own SSE stream** via `writeAssistantContentChunk()`.
+4. On lifecycle `phase: "end"`, gateway writes `data: [DONE]\n\n` and closes the response.
+
+Key files:
+- `src/gateway/openai-http.ts` — SSE reconstruction, `writeDone`, `writeAssistantContentChunk`
+- `src/gateway/http-common.ts` — `setSseHeaders`, `writeDone`
+- `src/agents/pi-embedded-subscribe.ts` — text_delta handling, agent event emission
+- `src/agents/agent-command.ts` — ACP text_delta → emitAgentEvent
+- `src/agents/pi-embedded-runner/openai-stream-wrappers.ts` — payload patching (no content filtering)
+
+**Implications for energy proxy:** Content from SSE chunks passes through unfiltered. The proxy must inject the footer as an extra content delta chunk **before** `[DONE]`, not after. See [energy proxy design](../design/energy-proxy.md).
+
 ## Open questions for EcoClaw
 
 - Does pointing OpenClaw at the energy proxy (`http://localhost:8001/v1`) work transparently? Almost certainly yes — vLLM provider uses the configured `baseUrl`. Set `baseUrl` in explicit config to override the default `localhost:8000`.

@@ -137,7 +137,7 @@ Install NemoClaw on top of OpenClaw for enterprise-grade sandboxing and security
 
 ## Open questions
 
-- **Energy proxy streaming**: Does appending an extra SSE chunk after `[DONE]` pass through OpenClaw cleanly, or must the footer be injected into the last content delta? (delegated to openclaw-expert)
+- **Energy proxy streaming**: Resolved — footer must be injected as an extra content delta chunk **before** `[DONE]`, not after. OpenClaw reconstructs its own SSE stream from internal agent events; it does not passthrough raw SSE. Post-`[DONE]` chunks are never seen. See [energy-proxy.md](energy-proxy.md).
 - **NVFP4 on GB10**: Resolved — MARLIN backend works. Final launch config (max-model-len, reasoning-parser flag) being finalized by vllm-expert. FP8 being evaluated as potential faster alternative.
 - **Model switching UX**: Resolved — carbon router sends a system message before triggering the vLLM restart: "Switching to Nemotron Nano — high carbon on grid. Back in ~2 min."
 - **Footer injection**: Resolved — proxy appends formatted footer directly to stream. AGENTS.md as belt-and-suspenders fallback. No plugin needed.

@@ -193,57 +193,29 @@ def _notify_openclaw(message: str, token: str | None = None):
         log.warning("chat.inject failed: %s", e)
 
 
-def switch_model(model_key: str, label: str):
-    """Stop vLLM and restart with the new model."""
+def apply_carbon_action(model_key: str, label: str):
+    """Apply carbon-aware action: freq cap for green mode, reset for performance mode."""
     model = MODELS[model_key]
-    log.info("Switching to %s (%s)", model["short"], label)
+    log.info("Carbon action: %s (%s)", model["short"], label)
 
     _notify_openclaw(
-        f"⚠️ Grid carbon: {st.get().carbon_gco2:.0f} gCO₂/kWh — switching to {model['short']} ({label}). Back in ~2 min."
+        f"⚡ Grid carbon: {st.get().carbon_gco2:.0f} gCO₂/kWh — switching to {label}. "
+        f"{'Throttling GPU to save energy.' if model_key == 'nano' else 'Restoring full GPU performance.'}"
     )
 
-    # Stop current vLLM
-    subprocess.run(["screen", "-S", VLLM_SCREEN, "-X", "quit"], capture_output=True)
-    time.sleep(2)
+    if model_key == "nano":
+        # Dirty grid: cap frequency to reduce energy
+        _apply_freq_cap(300, 1000)
+    else:
+        # Clean grid: restore full frequency
+        _reset_freq_cap()
 
-    # Start new vLLM
-    cmd = (
-        f"source ~/.profile && ml && "
-        f"{model['env']} "
-        f"vllm serve {model['id']} "
-        f"--trust-remote-code "
-        f"--reasoning-parser {model['reasoning_parser']} "
-        f"--max-model-len {model['max_model_len']} "
-        f"--gpu-memory-utilization {model['gpu_mem_util']} "
-        f"2>&1 | tee /tmp/vllm-{model_key}.log"
-    )
-    subprocess.Popen(["screen", "-dmS", VLLM_SCREEN, "bash", "-lc", cmd])
-    log.info("vLLM restarting with %s", model["short"])
-
-    # Wait for vLLM to be ready
-    _wait_for_vllm()
-
-    # Update shared state
     st.update(
         model=model["id"],
         model_short=model["short"],
         mode=label,
     )
-    log.info("Switch complete: now serving %s", model["short"])
-
-
-def _wait_for_vllm(timeout: int = 300, poll: int = 5):
-    deadline = time.time() + timeout
-    while time.time() < deadline:
-        try:
-            r = httpx.get("http://localhost:8000/v1/models", timeout=2)
-            if r.status_code == 200:
-                log.info("vLLM is ready")
-                return
-        except Exception:
-            pass
-        time.sleep(poll)
-    log.error("vLLM did not become ready within %ds", timeout)
+    log.info("Carbon action complete: %s", model["short"])
 
 
 def _current_label(carbon: float, config: dict, model_key: str) -> str:
@@ -265,7 +237,7 @@ def _demo_poll():
     st.update(carbon_gco2=carbon)
     new_key, label = select_model(carbon, config, _current_model_key)
     if new_key and new_key != _current_model_key:
-        switch_model(new_key, label)
+        apply_carbon_action(new_key, label)
         _current_model_key = new_key
     else:
         # No switch needed — still update mode label to reflect current carbon state
@@ -306,7 +278,7 @@ def run(initial_model_key: str = "nano", poll_event: threading.Event | None = No
         else:
             new_model_key, label = select_model(carbon, config, current_model_key)
             if new_model_key and new_model_key != current_model_key:
-                switch_model(new_model_key, label)
+                apply_carbon_action(new_model_key, label)
                 current_model_key = new_model_key
                 _current_model_key = new_model_key
 

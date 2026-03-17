@@ -1,5 +1,17 @@
 # EcoClaw Demo
 
+## Opening (read to camera, ~30s)
+
+Every time you ask an AI a question, it burns energy. But you never see the cost.
+
+EcoClaw fixes that. It runs a 30-billion-parameter Nemotron model locally on this GB10, and every response comes with a receipt showing the exact joules consumed, measured by a hardware counter on the chip itself. Not an estimate. It also calculates the CO₂ footprint using live data from the California power grid.
+
+When the grid gets dirty, EcoClaw automatically throttles the GPU to cut energy use. When the grid cleans up, it restores full speed. The switch is instant, and the user sees the difference in real time.
+
+Let me show you.
+
+---
+
 ## Before recording
 ```bash
 lsof -i :18789 | grep ssh || ssh -N -L 18789:localhost:18789 nvidia@10.1.96.152 &

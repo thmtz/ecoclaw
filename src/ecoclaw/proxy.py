@@ -4,12 +4,15 @@ Measures NVML energy per request and injects an energy receipt
 into every response (streaming and non-streaming).
 """
 import json
+import logging
 import httpx
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import StreamingResponse
 
 from . import state as st
 from .nvml import measure, energy_mj
+
+log = logging.getLogger(__name__)
 
 VLLM_BASE = "http://localhost:8000"
 PROXY_PORT = 8001
@@ -54,6 +57,14 @@ async def proxy(request: Request, path: str):
 
     # Rewrite model ID to match currently-loaded model (handles carbon router switches)
     req_json["model"] = st.get().model
+
+    # Strip fields vLLM doesn't support (sent by OpenClaw/OpenAI-compatible clients)
+    # tool_choice="auto" requires --enable-auto-tool-choice and --tool-call-parser flags
+    _VLLM_UNSUPPORTED = {"store", "metadata", "reasoning_effort", "tool_choice", "tools"}
+    stripped = {f for f in _VLLM_UNSUPPORTED if req_json.pop(f, None) is not None}
+    if stripped:
+        log.info("Stripped unsupported vLLM fields: %s", stripped)
+
     body = json.dumps(req_json).encode()
 
     # Strip headers that must not be forwarded when body is modified
@@ -83,6 +94,8 @@ async def _nonstream_proxy(request: Request, url: str, body: bytes, headers: dic
                     content=body,
                 )
             resp = r.json()
+            if r.status_code >= 400:
+                log.error("vLLM %d: %s", r.status_code, resp)
     except httpx.ConnectError:
         return Response(
             content=json.dumps({"error": {"message": "vLLM backend unavailable", "type": "proxy_error"}}),
@@ -129,6 +142,12 @@ async def _stream_proxy(request: Request, url: str, body: bytes, headers: dict) 
                 headers=headers,
                 content=body,
             ) as r:
+                if r.status_code >= 400:
+                    err_body = await r.aread()
+                    log.error("vLLM stream %d: %s", r.status_code, err_body.decode())
+                    yield f"data: {json.dumps({'error': {'message': err_body.decode(), 'type': 'vllm_error'}})}\n\n"
+                    yield "data: [DONE]\n\n"
+                    return
                 async for line in r.aiter_lines():
                     if not line:
                         yield "\n"

@@ -74,16 +74,29 @@ Carbon router (thread in proxy)  ◄── Electricity Maps API / mock file
 
 ---
 
+## Completed (Beads)
+
+| Bead | Description |
+|-|-|
+| hackathon-pxn | ✅ Proxy and receipt quality fixes (epic — all children closed) |
+| hackathon-pxn.1 | ✅ Double receipt fix: token threshold (≥10) + per-IP cooldown (10s) |
+| hackathon-pxn.2 | ✅ CO₂ grams calculation in receipt |
+| hackathon-pxn.3 | ✅ Round mWh/Wh/µWh display to 2 decimal places |
+| hackathon-pxn.4 | ✅ Per-IP cooldown to suppress rapid repeat injections |
+| hackathon-hnk | ✅ README rewritten for judges/submission |
+
 ## Open Items (Beads)
 
 | Bead | Priority | Description |
 |-|-|-|
+| hackathon-dly | **P1** | Carbon switching validation (epic) — NOT YET VALIDATED |
+| hackathon-dly.4 | P1 | Validate carbon switch end-to-end: notification + vLLM restart + new model |
+| hackathon-dly.1 | P2 | Validate chat.inject notification in WebChat |
+| hackathon-dly.2 | P2 | Validate Super 120B stable with 8192 context |
+| hackathon-0gk | P1 | Dual-model serving: instant carbon switching via port swap (epic) |
 | hackathon-9x1.1 | P1 | Record demo video |
 | hackathon-9x1.2 | P1 | Trigger carbon switch on camera |
 | hackathon-9x1.3 | P1 | Submit video |
-| hackathon-pxn.1 | P1 | Verify double-receipt fix in WebChat |
-| hackathon-dly | **P1** | Carbon switching validation (epic) — NOT YET VALIDATED |
-| hackathon-pxn.2 | P2 | FR: CO2 grams calculation in receipt |
 
 ---
 

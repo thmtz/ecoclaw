@@ -150,9 +150,28 @@ screen -dmS vllm bash -lc 'source ~/.profile && ml && \
 | Qwen/Qwen2.5-0.5B-Instruct | ~110 GiB (preallocates ~90% of unified memory by default) |
 | Nemotron-3 Nano 30B NVFP4 (MARLIN) | ~110 GiB |
 | Nemotron-3 Nano 30B FP8 (native) | ~107 GiB |
-| Nemotron-3 Super 120B NVFP4 | TBD |
+| Nemotron-3 Super 120B NVFP4 (MARLIN) | ~69.5 GiB weights + KV cache |
 
 **Note:** vLLM preallocates ~90% of available memory for KV cache by default. On GB10 with 119 GiB unified memory this is ~107 GiB regardless of model size. Use `--gpu-memory-utilization` to tune.
+
+## Nemotron-3-Super-120B-A12B-NVFP4 — memory tuning
+
+Super 120B NVFP4 weights load at **69.54 GiB** with MARLIN (MARLIN adds overhead vs raw NVFP4 size). Requires custom `--gpu-memory-utilization` — default 0.9 (107 GiB) works but `--gpu-memory-utilization 0.5` (59.5 GiB) and `0.6` (71.4 GiB) both fail with "No available memory for the cache blocks".
+
+**Minimum viable config:** `--gpu-memory-utilization 0.75` (89 GiB budget → ~19 GiB for KV cache at 4096 context). In progress — not yet confirmed working.
+
+**Reasoning parser:** Super has its own `super_v3_reasoning_parser.py` in the model repo — use `--reasoning-parser super_v3`, not `nano_v3`.
+
+```bash
+# Super 120B launch command (in-progress, 0.75 not yet confirmed):
+VLLM_USE_FLASHINFER_MOE_FP4=0 VLLM_NVFP4_GEMM_BACKEND=marlin \
+vllm serve nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4 \
+  --trust-remote-code \
+  --max-model-len 4096 \
+  --gpu-memory-utilization 0.75 \
+  --reasoning-parser super_v3 \
+  --reasoning-parser-plugin ~/.cache/huggingface/hub/models--nvidia--NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4/snapshots/167959da964ab08b30211f71e68f6670eaa87966/super_v3_reasoning_parser.py
+```
 
 ## Switching models
 

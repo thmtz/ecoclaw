@@ -26,6 +26,9 @@
   },
   "gateway": {
     "mode": "local",
+    "controlUi": {
+      "allowedOrigins": ["http://10.1.96.152:18789"]
+    },
     "http": {
       "endpoints": {
         "chatCompletions": {

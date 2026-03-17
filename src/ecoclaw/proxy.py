@@ -69,7 +69,7 @@ def _format_receipt(delta_mj: float, tokens: int) -> str:
     s = st.get()
     return (
         f"\n\n─────────────────────────────\n"
-        f"⚡ Energy: {_fmt_energy(delta_mj)} · {_fmt_power(delta_mj)} · {tok_per_j:.0f} tok/J\n"
+        f"⚡ Energy: {_fmt_energy(delta_mj)} · {_fmt_power(delta_mj)} · {tok_per_j:.1f} tok/J\n"
         f"🌱 Grid: {s.carbon_gco2:.0f} gCO₂/kWh · {s.mode} · {s.model_short}\n"
         f"─────────────────────────────"
     )

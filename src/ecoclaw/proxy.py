@@ -24,10 +24,53 @@ MOCK_FILE = Path.home() / ".ecoclaw" / "mock_carbon"
 _last_receipt: dict[str, float] = {}
 RECEIPT_COOLDOWN = 10.0  # seconds
 
+# Cumulative session energy tracking
+_session_lock = threading.Lock()
+_session = {"energy_mj": 0.0, "tokens": 0, "requests": 0, "co2_ug": 0.0}
+
 # Set by main.py so /demo/poll can signal the carbon router thread
 demo_poll_event: threading.Event | None = None
 
 app = FastAPI(title="EcoClaw Energy Proxy")
+
+
+def _session_add(delta_mj: float, tokens: int):
+    """Accumulate energy and tokens into the session totals."""
+    s = st.get()
+    co2_ug = s.carbon_gco2 * (delta_mj / 3_600_000) * 1_000_000  # micrograms
+    with _session_lock:
+        _session["energy_mj"] += delta_mj
+        _session["tokens"] += tokens
+        _session["requests"] += 1
+        _session["co2_ug"] += co2_ug
+
+
+@app.get("/session")
+async def get_session():
+    """Return cumulative session energy stats."""
+    with _session_lock:
+        snap = dict(_session)
+    snap["energy_display"] = _fmt_energy(snap["energy_mj"])
+    snap["power_display"] = _fmt_power(snap["energy_mj"])
+    gco2 = snap["co2_ug"] / 1_000_000
+    if gco2 < 0.001:
+        snap["co2_display"] = f"{snap['co2_ug']:.1f} µgCO₂"
+    elif gco2 < 1:
+        snap["co2_display"] = f"{gco2*1000:.2f} mgCO₂"
+    else:
+        snap["co2_display"] = f"{gco2:.3f} gCO₂"
+    return snap
+
+
+@app.post("/session/reset")
+async def reset_session():
+    """Reset cumulative session energy stats."""
+    with _session_lock:
+        _session["energy_mj"] = 0.0
+        _session["tokens"] = 0
+        _session["requests"] = 0
+        _session["co2_ug"] = 0.0
+    return {"status": "reset"}
 
 
 @app.post("/demo/carbon/{value}")
@@ -78,10 +121,21 @@ def _format_receipt(delta_mj: float, tokens: int) -> str:
         co2_str = f"{gco2*1000:.2f} mgCO₂"
     else:
         co2_str = f"{gco2:.3f} gCO₂"
+
+    # Accumulate into session totals
+    _session_add(delta_mj, tokens)
+
+    # Session summary line
+    with _session_lock:
+        sess_energy = _session["energy_mj"]
+        sess_reqs = _session["requests"]
+    sess_line = f"📊 Session: {_fmt_energy(sess_energy)} total · {sess_reqs} requests"
+
     return (
         f"\n\n─────────────────────────────\n"
         f"⚡ Energy: {_fmt_energy(delta_mj)} · {_fmt_power(delta_mj)} · {tok_per_j:.1f} tok/J\n"
         f"🌱 Grid: {s.carbon_gco2:.0f} gCO₂/kWh · {co2_str} this response · {s.mode} · {s.model_short}\n"
+        f"{sess_line}\n"
         f"─────────────────────────────"
     )
 

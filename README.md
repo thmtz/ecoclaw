@@ -1,12 +1,25 @@
 # EcoClaw
 
-**An AI assistant that shows you the real energy cost of every response — and adapts to the carbon intensity of your electric grid.**
+Every time you ask an AI a question, it burns energy. EcoClaw tells you exactly how much.
 
-EcoClaw instruments local LLM inference with per-response energy receipts, making the hidden environmental cost of AI conversations visible. When the grid is dirty, it automatically switches to a smaller, more efficient model. When the grid is clean, it uses the larger, more capable one.
+It's a chat assistant running on an NVIDIA GB10 that measures the actual joules consumed by each response using hardware counters, calculates the CO₂ footprint from live grid data, and prints a receipt at the bottom of every answer. When the grid gets dirty, it throttles the GPU to save energy. When the grid is clean, it runs at full speed.
 
-Built for the NVIDIA GTC 2026 "Hack for Impact" hackathon (Eco Impact track), running entirely on a single GB10 workstation.
+Built at GTC 2026 "Hack for Impact" (Eco Impact track).
 
-## How it works
+## What you see
+
+Every response ends with a receipt like this:
+
+```
+─────────────────────────────
+⚡ Energy: 1.42 J · 0.39 mWh · 18.4 tok/J
+🌱 Grid: 180 gCO₂/kWh · 0.07 mgCO₂ this response · green mode · Nemotron Nano
+─────────────────────────────
+```
+
+The energy number comes from NVML hardware counters on the GPU (not an estimate). The CO₂ number comes from the Electricity Maps API, which reports the real-time carbon intensity of the California power grid.
+
+## Architecture
 
 ```
 User
@@ -21,87 +34,58 @@ Energy Proxy ◄── NVML (per-request energy measurement)
 vLLM (local inference)
  │
  ▼
-GB10 GPU (Nemotron Nano 30B or Super 120B)
+GB10 GPU (Nemotron Nano 30B)
 
 Carbon Router ◄── Electricity Maps API (live grid carbon intensity)
- └──► switches models when carbon thresholds are crossed
+ └──► adjusts GPU frequency when carbon thresholds are crossed
 ```
 
-**Every response includes an energy receipt:**
+The energy proxy sits between [OpenClaw](https://github.com/openclaw/openclaw) and vLLM. It snapshots the GPU energy counter before and after each request, computes the delta, and injects the receipt into the response stream before OpenClaw ever sees it. OpenClaw itself is unmodified; we only provide config files (`config/openclaw/`).
 
-```
-─────────────────────────────
-⚡ Energy: 1.42 J · 0.39 mWh · 18.4 tok/J
-🌱 Grid: 180 gCO₂/kWh · 0.07 mgCO₂ this response · green mode · Nemotron Nano
-─────────────────────────────
-```
-
-## Key features
-
-- **Per-response energy measurement** — NVML hardware counters measure exact millijoules consumed per inference call. No estimation, no averaging.
-- **Live carbon-aware model switching** — Polls the Electricity Maps API for real-time grid carbon intensity. When carbon is high, switches to the efficient Nemotron Nano 30B (3B active params). When carbon is low, switches to the more capable Nemotron Super 120B (12B active params).
-- **CO₂ per response** — Combines measured energy with live grid intensity to show actual grams of CO₂ attributable to each answer.
-- **Demo control endpoints** — `POST /demo/carbon/{value}` and `POST /demo/poll` let you simulate any grid state for live demos.
+The carbon router polls the Electricity Maps API every 10 minutes. When grid carbon crosses a threshold (default 300 gCO₂/kWh), it caps the GPU clock frequency to reduce energy use. When the grid cleans up, it removes the cap.
 
 ## Models
 
 | Model | Active params | Quantization | Role |
 |-|-|-|-|
-| Nemotron Nano 30B-A3B | 3B | FP8 (native Blackwell) | Green mode — high carbon grid |
-| Nemotron Super 120B-A12B | 12B | NVFP4 + MARLIN | Performance mode — clean grid |
+| Nemotron Nano 30B-A3B | 3B | FP8 (native Blackwell) | Primary model, always loaded |
+| Nemotron Super 120B-A12B | 12B | NVFP4 + MARLIN | Alternative for dual-model setups |
 
-Both are MoE hybrid Mamba-Transformer architectures from NVIDIA.
+Both are MoE hybrid Mamba-Transformer architectures from NVIDIA. The Nano runs at ~72 tok/s on GB10; the Super runs at ~15-17 tok/s but produces higher quality output.
 
 ## Running it
 
-### Prerequisites
-
-- NVIDIA GB10 (or any Blackwell GPU with NVML support)
-- Python 3.10+
-- vLLM 0.17+
-- [OpenClaw](https://github.com/openclaw/openclaw) installed and configured
-- Electricity Maps API key (free tier works) at `~/.config/electricity_maps/api_key`
-
-### Quick start
+You need an NVIDIA GB10 (or another Blackwell GPU with NVML energy counter support), Python 3.10+, vLLM 0.17+, and [OpenClaw](https://github.com/openclaw/openclaw).
 
 ```bash
-# 1. Start vLLM with Nemotron Nano
+# 1. Start vLLM
 vllm serve nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8 \
   --port 8000 --max-model-len 32768
 
-# 2. Start the EcoClaw energy proxy + carbon router
+# 2. Start EcoClaw (proxy on :8001 + carbon router)
 PYTHONPATH=src python -m ecoclaw.main
 
-# 3. Point OpenClaw at the proxy (port 8001, not vLLM directly)
-# In ~/.openclaw/openclaw.json, set vLLM provider baseUrl to http://localhost:8001
+# 3. Point OpenClaw at the proxy, not vLLM directly
+# Set baseUrl to http://localhost:8001 in ~/.openclaw/openclaw.json
 
-# 4. Open WebChat
+# 4. Open the chat UI
 open http://localhost:18789
 ```
 
-See [docs/setup.md](docs/setup.md) for detailed installation and configuration.
+Optional: get a free Electricity Maps API key at https://api-portal.electricitymaps.com/ and put it in `~/.config/electricity_maps/api_key`. Without it, the carbon router uses a fallback value.
 
-## Architecture details
+Full setup instructions: [docs/setup.md](docs/setup.md)
 
-- [Design overview](docs/design/index.md) — full architecture, component descriptions, config format
-- [Energy proxy](docs/design/energy-proxy.md) — how NVML measurement and receipt injection work
-- [Carbon router](docs/design/carbon-router.md) — threshold-based model switching logic
-- [OpenClaw integration](docs/design/openclaw.md) — provider config, workspace setup
+## How it works, in detail
 
-## Tech stack
-
-| Component | Technology |
-|-|-|
-| LLM serving | vLLM 0.17 on GB10 |
-| Models | Nemotron Nano 30B FP8, Nemotron Super 120B NVFP4 |
-| Energy measurement | NVML (`nvmlDeviceGetTotalEnergyConsumption`) |
-| Carbon data | Electricity Maps API (US-CAL-CISO zone) |
-| Chat UI + gateway | OpenClaw |
-| Proxy + router | Python (FastAPI/uvicorn) |
+- [Design overview](docs/design/index.md)
+- [Energy proxy](docs/design/energy-proxy.md) (NVML measurement + receipt injection)
+- [Carbon router](docs/design/carbon-router.md) (threshold logic, model switching)
+- [OpenClaw integration](docs/design/openclaw.md) (provider config, workspace files)
 
 ## Team
 
-**Neuralwatt** — AI infrastructure startup focused on energy-efficient inference. Our core product uses Q-learning to optimize GPU power states via NVML, maximizing tokens-per-joule for LLM workloads.
+**Neuralwatt** builds infrastructure for energy-efficient AI inference. Our main product uses Q-learning to optimize GPU power states via NVML.
 
 ## License
 

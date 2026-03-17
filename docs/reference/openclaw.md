@@ -80,42 +80,62 @@ There is no `message:before_send` or response transformer hook. The response tex
 
 Point OpenClaw at the energy proxy port. Proxy appends the footer. Optionally add an AGENTS.md instruction so the LLM knows the format context.
 
-## Connecting OpenClaw to vLLM
+## Connecting OpenClaw to vLLM (validated)
 
-Native vLLM provider — no custom plugin needed.
+Native vLLM provider — no custom plugin needed. **Explicit config required** (auto-discovery alone doesn't work — the `models` array with `id` and `name` is mandatory).
 
-```bash
-export VLLM_API_KEY="anything"   # any value; no auth on local vLLM
-```
-
-Config in `~/.openclaw/openclaw.json`:
-```json5
+Validated `~/.openclaw/openclaw.json`:
+```json
 {
-  agents: {
-    defaults: {
-      model: { primary: "vllm/nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8" }
+  "models": {
+    "providers": {
+      "vllm": {
+        "baseUrl": "http://127.0.0.1:8000/v1",
+        "apiKey": "none",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "Qwen/Qwen2.5-0.5B-Instruct",
+            "name": "Qwen 2.5 0.5B"
+          }
+        ]
+      }
     }
-  }
-}
-```
-
-Auto-discovers models from `GET http://127.0.0.1:8000/v1/models`. Model IDs are prefixed with `vllm/`.
-
-Explicit config (if auto-discovery doesn't work):
-```json5
-{
-  models: {
-    providers: {
-      vllm: {
-        baseUrl: "http://127.0.0.1:8000/v1",
-        apiKey: "anything",
-        api: "openai-completions",
-        models: [{ id: "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8", ... }]
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "vllm/Qwen/Qwen2.5-0.5B-Instruct"
+      },
+      "memorySearch": {
+        "enabled": false
+      }
+    }
+  },
+  "gateway": {
+    "mode": "local",
+    "http": {
+      "endpoints": {
+        "chatCompletions": {
+          "enabled": true
+        }
       }
     }
   }
 }
 ```
+
+**Config gotchas discovered:**
+- `models` array is required — config validation rejects the provider without it
+- Each model entry needs both `id` and `name` fields
+- `gateway.mode` must be set to `"local"` — gateway refuses to start without it
+- `memorySearch.enabled: false` — no embedding provider available on GB10
+- Gateway auto-generates `gateway.auth.token` on first start and writes it back to the config file
+- Model IDs are prefixed with `vllm/` when referenced in `agents.defaults.model.primary`
+
+When switching to the energy proxy, change `baseUrl` to `"http://127.0.0.1:8001/v1"`.
+
+Config template (without auto-generated fields) is tracked at `hackathon/config/openclaw/openclaw.json`.
 
 ## Skill system
 
@@ -135,20 +155,36 @@ Injected into the system prompt on every turn (keep concise — they consume tok
 - `MEMORY.md` — persistent memory (grows over time, watch size)
 - `USER.md`, `IDENTITY.md`, `HEARTBEAT.md`
 
-## Starting OpenClaw
+## Starting OpenClaw (validated)
 
 ```bash
+# Prerequisites (already satisfied on GB10)
+# Node.js v22.22.1, pnpm 10.32.1
+
 # Install (already have repo at ~/git/openclaw)
 cd ~/git/openclaw && pnpm install
 
-# Onboard (sets up gateway, workspace, model config)
-openclaw onboard --install-daemon
+# Build WebChat UI (required for browser access)
+pnpm ui:build
 
-# Start gateway manually
-openclaw gateway --port 18789 --verbose
+# Start gateway in screen session
+screen -S openclaw -dm bash -c 'cd ~/git/openclaw && VLLM_API_KEY=none npx openclaw gateway --port 18789 --verbose 2>&1 | tee /tmp/openclaw-gateway.log'
 
-# Web UI available at http://localhost:18789
+# WebChat UI: http://localhost:18789
+# Gateway auth token: check ~/.openclaw/openclaw.json → gateway.auth.token
 ```
+
+**Startup notes:**
+- Do NOT use `openclaw onboard` — it's interactive and overwrites config. Deploy config files manually.
+- `VLLM_API_KEY=none` is required as env var (OpenClaw checks for it even though local vLLM has no auth)
+- Gateway auto-generates auth token on first start if not present
+- WebChat UI requires `pnpm ui:build` — without it, the gateway serves the API but the browser UI shows "Missing Control UI assets"
+- Gateway logs to `/tmp/openclaw/openclaw-<date>.log` and stdout
+
+**Workspace files deployed to GB10:**
+- `~/.openclaw/workspace/AGENTS.md` — EcoClaw persona, energy receipt context
+- `~/.openclaw/workspace/SOUL.md` — one-line persona
+- Templates tracked at `hackathon/config/openclaw/`
 
 ## Streaming architecture (important for energy proxy)
 
@@ -167,6 +203,41 @@ Key files:
 - `src/agents/pi-embedded-runner/openai-stream-wrappers.ts` — payload patching (no content filtering)
 
 **Implications for energy proxy:** Content from SSE chunks passes through unfiltered. The proxy must inject the footer as an extra content delta chunk **before** `[DONE]`, not after. See [energy proxy design](../design/energy-proxy.md).
+
+## Gateway `chat.inject` — push messages into active sessions
+
+The gateway exposes a `chat.inject` WebSocket RPC method that appends an assistant message into an active session and broadcasts it to all connected WebChat clients immediately.
+
+**Schema:**
+```json
+{
+  "type": "req",
+  "id": "unique-id",
+  "method": "chat.inject",
+  "params": {
+    "sessionKey": "main",
+    "message": "⚠️ Switching to Nemotron Nano — grid carbon is high. Back in ~2 min.",
+    "label": "EcoClaw"
+  }
+}
+```
+
+**Details:**
+- Requires `operator.admin` scope (in the `ADMIN_SCOPE` group in `method-scopes.ts`)
+- WebSocket-only — no HTTP endpoint. Caller must connect via WS and complete the `connect` handshake with admin auth first.
+- Appends to the session transcript via `SessionManager.appendMessage()` (preserves parentId chain)
+- Broadcasts a `chat` event with `state: "final"` to all connected clients — WebChat renders it immediately
+- The message is tagged as `model: "gateway-injected"`, `provider: "openclaw"` so it's distinguishable from real LLM output
+- Optional `label` field adds a prefix like `[EcoClaw]\n\n` to the message text
+
+**Key source files:**
+- `src/gateway/server-methods/chat.ts:1504` — `chat.inject` handler
+- `src/gateway/server-methods/chat-transcript-inject.ts` — `appendInjectedAssistantMessageToTranscript`
+- `src/gateway/protocol/schema/logs-chat.ts:57` — `ChatInjectParamsSchema`
+
+**For carbon router use:** The carbon router can open a WebSocket connection to the gateway (localhost:18789), authenticate, and call `chat.inject` to notify the user of model switches. This avoids waiting until the next user message.
+
+**Simpler MVP fallback:** If WS auth is too complex for hackathon, the carbon router can write a status file that the energy proxy reads and includes in the next response footer (e.g., "⚠️ Model switch in progress..."). Less immediate but zero integration complexity.
 
 ## Open questions for EcoClaw
 

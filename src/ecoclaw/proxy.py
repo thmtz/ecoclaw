@@ -10,7 +10,7 @@ from fastapi import FastAPI, Request, Response
 from fastapi.responses import StreamingResponse
 
 from . import state as st
-from .nvml import measure
+from .nvml import measure, energy_mj
 
 VLLM_BASE = "http://localhost:8000"
 PROXY_PORT = 8001
@@ -55,6 +55,9 @@ async def proxy(request: Request, path: str):
     streaming = req_json.get("stream", False)
 
     if streaming:
+        # Ask vLLM to include usage stats in the final streaming chunk
+        req_json.setdefault("stream_options", {})["include_usage"] = True
+        body = json.dumps(req_json).encode()
         return await _stream_proxy(request, url, body)
     else:
         return await _nonstream_proxy(request, url, body)
@@ -92,7 +95,7 @@ async def _nonstream_proxy(request: Request, url: str, body: bytes) -> Response:
 async def _stream_proxy(request: Request, url: str, body: bytes) -> StreamingResponse:
     async def generate():
         total_tokens = 0
-        energy_before = __import__("ecoclaw.nvml", fromlist=["energy_mj"]).energy_mj()
+        energy_before = energy_mj()
         receipt_injected = False
 
         async with httpx.AsyncClient(timeout=300) as client:
@@ -109,8 +112,6 @@ async def _stream_proxy(request: Request, url: str, body: bytes) -> StreamingRes
 
                     if line == "data: [DONE]":
                         if not receipt_injected:
-                            # Measure energy and inject footer before DONE
-                            from .nvml import energy_mj
                             delta_mj = max(0.0, energy_mj() - energy_before)
                             receipt = _format_receipt(delta_mj, total_tokens)
                             footer_chunk = json.dumps({
@@ -124,9 +125,14 @@ async def _stream_proxy(request: Request, url: str, body: bytes) -> StreamingRes
                     if line.startswith("data: "):
                         try:
                             chunk = json.loads(line[6:])
-                            delta = chunk.get("choices", [{}])[0].get("delta", {})
-                            if delta.get("content"):
-                                total_tokens += 1
+                            # Use real usage from final chunk if available
+                            usage = chunk.get("usage")
+                            if usage and usage.get("completion_tokens"):
+                                total_tokens = usage["completion_tokens"]
+                            elif not usage:
+                                delta = chunk.get("choices", [{}])[0].get("delta", {})
+                                if delta.get("content"):
+                                    total_tokens += 1
                         except Exception:
                             pass
                     yield f"{line}\n\n"

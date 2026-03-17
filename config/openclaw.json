@@ -1,0 +1,39 @@
+{
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "vllm/nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-NVFP4"
+      },
+      "workspace": "~/.openclaw/workspace"
+    }
+  },
+  "models": {
+    "providers": {
+      "vllm": {
+        "baseUrl": "http://localhost:8001/v1",
+        "apiKey": "ecoclaw-local",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-NVFP4",
+            "name": "Nemotron Nano 30B",
+            "reasoning": true,
+            "input": ["text"],
+            "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 },
+            "contextWindow": 32768,
+            "maxTokens": 4096
+          },
+          {
+            "id": "nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4",
+            "name": "Nemotron Super 120B",
+            "reasoning": true,
+            "input": ["text"],
+            "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 },
+            "contextWindow": 4096,
+            "maxTokens": 2048
+          }
+        ]
+      }
+    }
+  }
+}

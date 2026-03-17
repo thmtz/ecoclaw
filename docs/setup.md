@@ -5,9 +5,38 @@ How to get the full EcoClaw stack running on a fresh GB10. Written as we go — 
 ## Prerequisites
 
 - GB10 accessible via `gpuctl` (see `CLAUDE.md` for instance name)
-- Python 3.12 in `~/.venvs/ml` (activate: `source ~/.profile && ml`)
-- Node.js ≥22 and pnpm (see below)
-- HuggingFace models downloaded (see Models section)
+- Instance prepared via `gpuctl prepare gb10-hackathon -m Qwen/Qwen2.5-0.5B-Instruct` (baseline)
+
+## Additional installs (beyond gpuctl prepare)
+
+These were installed manually on top of the base prepare — document so they can be reproduced:
+
+```bash
+# CUDA 12 compat runtime — required by vLLM's native extensions
+sudo apt install cuda-cudart-12-8
+
+# Python headers — required by torch.inductor JIT at vLLM startup
+sudo apt install python3-dev
+
+# pynvml — NVML Python bindings for energy measurement
+# Install into nvml-env (separate from ml venv to avoid conflicts)
+python3 -m venv ~/nvml-env
+~/nvml-env/bin/pip install pynvml
+
+# Also install into ml venv for the EcoClaw proxy
+source ~/.profile && ml
+pip install pynvml fastapi uvicorn httpx pyyaml
+
+# Node.js v22 — required for OpenClaw (already on GB10 at v22.22.1)
+# If missing: curl -fsSL https://deb.nodesource.com/setup_22.x | sudo bash && sudo apt install nodejs
+node --version   # verify ≥22
+
+# pnpm — Node package manager for OpenClaw
+npm install -g pnpm
+pnpm --version   # verify installed
+```
+
+**What gpuctl prepare already installs:** vLLM 0.17.1, PyTorch 2.10, DCGM 3.3.9, Rust, uv, ripgrep, fd, jq, yq, nvtop
 
 ---
 

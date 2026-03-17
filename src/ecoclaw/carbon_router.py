@@ -121,16 +121,26 @@ def _notify_openclaw(message: str, token: str = "439368c7ef3a54d50317db8d985c5b2
         try:
             import websockets
             async with websockets.connect("ws://localhost:18789") as ws:
-                await ws.send(json.dumps({"type": "req", "id": "notify-1", "method": "connect", "params": {"token": token}}))
-                await ws.recv()
+                await ws.send(json.dumps({"type": "req", "id": "notify-1", "method": "connect", "params": {"token": token, "scope": "operator.admin"}}))
+                connect_resp_raw = await ws.recv()
+                connect_resp = json.loads(connect_resp_raw)
+                if connect_resp.get("type") == "error" or connect_resp.get("error"):
+                    log.warning("chat.inject connect failed: %s", connect_resp)
+                    return
+                log.info("chat.inject connect ok: %s", connect_resp.get("type"))
                 await ws.send(json.dumps({"type": "req", "id": "notify-2", "method": "chat.inject", "params": {"sessionKey": "main", "message": message, "label": "EcoClaw"}}))
-                await ws.recv()
+                inject_resp_raw = await ws.recv()
+                inject_resp = json.loads(inject_resp_raw)
+                log.info("chat.inject response: %s", inject_resp)
         except Exception as e:
             log.warning("chat.inject failed: %s", e)
+    loop = asyncio.new_event_loop()
     try:
-        asyncio.run(_send())
+        loop.run_until_complete(_send())
     except Exception as e:
         log.warning("notify_openclaw error: %s", e)
+    finally:
+        loop.close()
 
 
 def switch_model(model_key: str, label: str):

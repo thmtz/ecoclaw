@@ -67,7 +67,7 @@ async def proxy(request: Request, path: str):
         log.info("Stripped unsupported vLLM fields: %s", stripped)
 
     # Clamp token limits to vLLM's --max-model-len
-    MAX_TOKENS = 2048
+    MAX_TOKENS = 512
     for field in ("max_completion_tokens", "max_tokens"):
         if req_json.get(field, 0) > MAX_TOKENS:
             log.info("Clamping %s from %d to %d", field, req_json[field], MAX_TOKENS)

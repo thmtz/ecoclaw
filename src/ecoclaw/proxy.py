@@ -212,7 +212,7 @@ async def _stream_proxy(request: Request, url: str, body: bytes, headers: dict) 
                         continue
 
                     if line == "data: [DONE]":
-                        if not receipt_injected:
+                        if not receipt_injected and total_tokens >= 10:
                             delta_mj = max(0.0, energy_mj() - energy_before)
                             receipt = _format_receipt(delta_mj, total_tokens)
                             footer_chunk = json.dumps({

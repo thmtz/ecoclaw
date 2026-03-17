@@ -161,20 +161,32 @@ def run(initial_model_key: str = "nano"):
     api_key = load_api_key()
     current_model_key = initial_model_key
 
-    log.info("Carbon router started — initial model: %s", current_model_key)
+    log.info("Carbon router started — initial model: %s (no switch on first poll)", current_model_key)
     st.update(
         model=MODELS[current_model_key]["id"],
         model_short=MODELS[current_model_key]["short"],
         mode="startup",
     )
 
+    first_poll = True
     while True:
         carbon = fetch_carbon(api_key, config.get("fallback_carbon", 250))
         st.update(carbon_gco2=carbon)
 
-        new_model_key, label = select_model(carbon, config, current_model_key)
-        if new_model_key and new_model_key != current_model_key:
-            switch_model(new_model_key, label)
-            current_model_key = new_model_key
+        if first_poll:
+            # On startup, accept whatever model is currently running. Only log what
+            # we would do — don't kill a running vLLM instance on first check.
+            new_model_key, label = select_model(carbon, config, current_model_key)
+            if new_model_key and new_model_key != current_model_key:
+                log.info(
+                    "Startup: carbon=%s → would switch to %s, but deferring until next poll",
+                    carbon, new_model_key,
+                )
+            first_poll = False
+        else:
+            new_model_key, label = select_model(carbon, config, current_model_key)
+            if new_model_key and new_model_key != current_model_key:
+                switch_model(new_model_key, label)
+                current_model_key = new_model_key
 
         time.sleep(config.get("poll_interval_seconds", 600))

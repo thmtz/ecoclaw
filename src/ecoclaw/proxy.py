@@ -6,6 +6,7 @@ into every response (streaming and non-streaming).
 import json
 import logging
 import threading
+import time as _time
 import httpx
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import StreamingResponse
@@ -19,6 +20,9 @@ log = logging.getLogger(__name__)
 VLLM_BASE = "http://localhost:8000"
 PROXY_PORT = 8001
 MOCK_FILE = Path.home() / ".ecoclaw" / "mock_carbon"
+
+_last_receipt: dict[str, float] = {}
+RECEIPT_COOLDOWN = 10.0  # seconds
 
 # Set by main.py so /demo/poll can signal the carbon router thread
 demo_poll_event: threading.Event | None = None
@@ -220,13 +224,20 @@ async def _stream_proxy(request: Request, url: str, body: bytes, headers: dict) 
 
                     if line == "data: [DONE]":
                         if not receipt_injected and total_tokens >= 10:
-                            delta_mj = max(0.0, energy_mj() - energy_before)
-                            receipt = _format_receipt(delta_mj, total_tokens)
-                            footer_chunk = json.dumps({
-                                "choices": [{"delta": {"content": receipt}, "index": 0}]
-                            })
-                            yield f"data: {footer_chunk}\n\n"
-                            receipt_injected = True
+                            client_ip = request.client.host if request.client else "unknown"
+                            now = _time.time()
+                            should_inject = (now - _last_receipt.get(client_ip, 0)) >= RECEIPT_COOLDOWN
+                            if should_inject:
+                                delta_mj = max(0.0, energy_mj() - energy_before)
+                                receipt = _format_receipt(delta_mj, total_tokens)
+                                footer_chunk = json.dumps({
+                                    "choices": [{"delta": {"content": receipt}, "index": 0}]
+                                })
+                                yield f"data: {footer_chunk}\n\n"
+                                receipt_injected = True
+                                _last_receipt[client_ip] = now
+                            else:
+                                log.debug("Receipt suppressed for %s (cooldown active)", client_ip)
                         yield "data: [DONE]\n\n"
                         break
 

@@ -1,5 +1,4 @@
 """Carbon router — polls Electricity Maps and switches models based on carbon intensity."""
-import asyncio
 import json
 import logging
 import os
@@ -117,30 +116,43 @@ def select_model(carbon: float, config: dict, current_model: str) -> tuple[str, 
 
 
 def _notify_openclaw(message: str, token: str = "439368c7ef3a54d50317db8d985c5b2829ab2e494ec24e26"):
-    async def _send():
-        try:
-            import websockets
-            async with websockets.connect("ws://localhost:18789") as ws:
-                await ws.send(json.dumps({"type": "req", "id": "notify-1", "method": "connect", "params": {"token": token, "scope": "operator.admin"}}))
-                connect_resp_raw = await ws.recv()
-                connect_resp = json.loads(connect_resp_raw)
-                if connect_resp.get("type") == "error" or connect_resp.get("error"):
-                    log.warning("chat.inject connect failed: %s", connect_resp)
-                    return
-                log.info("chat.inject connect ok: %s", connect_resp.get("type"))
-                await ws.send(json.dumps({"type": "req", "id": "notify-2", "method": "chat.inject", "params": {"sessionKey": "main", "message": message, "label": "EcoClaw"}}))
-                inject_resp_raw = await ws.recv()
-                inject_resp = json.loads(inject_resp_raw)
-                log.info("chat.inject response: %s", inject_resp)
-        except Exception as e:
-            log.warning("chat.inject failed: %s", e)
-    loop = asyncio.new_event_loop()
+    """Push a message into the active OpenClaw WebChat session via chat.inject.
+
+    Uses sync websocket-client (not async websockets) since this runs in a
+    daemon thread where creating a new event loop is fragile.
+    """
     try:
-        loop.run_until_complete(_send())
+        from websocket import create_connection
+
+        ws = create_connection("ws://localhost:18789", timeout=5)
+        try:
+            # Step 1: connect handshake with admin scope
+            ws.send(json.dumps({
+                "type": "req", "id": "notify-1", "method": "connect",
+                "params": {"token": token, "scope": "operator.admin"},
+            }))
+            connect_resp = json.loads(ws.recv())
+            if connect_resp.get("type") == "error" or connect_resp.get("error"):
+                log.warning("chat.inject connect failed: %s", connect_resp)
+                return
+            log.info("chat.inject connect ok: %s", connect_resp.get("type"))
+
+            # Step 2: inject the message
+            ws.send(json.dumps({
+                "type": "req", "id": "notify-2", "method": "chat.inject",
+                "params": {"sessionKey": "main", "message": message, "label": "EcoClaw"},
+            }))
+            inject_resp = json.loads(ws.recv())
+            if inject_resp.get("type") == "error" or inject_resp.get("error"):
+                log.warning("chat.inject rejected: %s", inject_resp)
+            else:
+                log.info("chat.inject ok: %s", inject_resp)
+        finally:
+            ws.close()
+    except ImportError:
+        log.warning("websocket-client not installed — skipping chat.inject notification")
     except Exception as e:
-        log.warning("notify_openclaw error: %s", e)
-    finally:
-        loop.close()
+        log.warning("chat.inject failed: %s", e)
 
 
 def switch_model(model_key: str, label: str):

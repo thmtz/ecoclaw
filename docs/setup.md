@@ -27,7 +27,7 @@ python3 -m venv ~/nvml-env
 
 # Also install into ml venv for the EcoClaw proxy
 source ~/.profile && ml
-pip install pynvml fastapi uvicorn httpx pyyaml
+pip install pynvml fastapi uvicorn httpx pyyaml websocket-client
 
 # Node.js v22 — required for OpenClaw (already on GB10 at v22.22.1)
 # If missing: curl -fsSL https://deb.nodesource.com/setup_22.x | sudo bash && sudo apt install nodejs
@@ -96,7 +96,7 @@ See `docs/reference/vllm.md` for full flag reference and troubleshooting.
 ```bash
 # Install dependencies into the ml venv
 source ~/.profile && ml
-pip install fastapi uvicorn httpx pyyaml pynvml
+pip install fastapi uvicorn httpx pyyaml pynvml websocket-client
 
 # Set Electricity Maps API key
 mkdir -p ~/.config/electricity_maps
